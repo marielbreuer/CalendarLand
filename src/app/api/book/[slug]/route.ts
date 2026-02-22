@@ -28,17 +28,26 @@ function parseWorkingDays(raw: string): number[] {
   }
 }
 
+type CalendarRow = {
+  id: string;
+  workingHoursStart: string | null;
+  workingHoursEnd: string | null;
+  workingDays: string;
+  isAlwaysAvailable: boolean;
+  isDefault: boolean;
+};
+
 async function getSchedulingConfig(
   calendarId: string | null,
   pageBufferMinutes: number,
   pageOwnerId: string
 ): Promise<{ config: SchedulingConfig; ownerCalendarIds: string[] }> {
   // Fetch owner's calendar IDs for availability scoping
-  const ownerCalendars = await prisma.calendar.findMany({
+  const ownerCalendars: CalendarRow[] = await prisma.calendar.findMany({
     where: { userId: pageOwnerId },
     select: { id: true, workingHoursStart: true, workingHoursEnd: true, workingDays: true, isAlwaysAvailable: true, isDefault: true },
   });
-  const ownerCalendarIds = ownerCalendars.map((c: { id: string }) => c.id);
+  const ownerCalendarIds = ownerCalendars.map((c) => c.id);
 
   // Get owner's settings (non-destructive findFirst)
   const settings = await prisma.userSettings.findFirst({

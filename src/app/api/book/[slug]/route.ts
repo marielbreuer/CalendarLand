@@ -38,7 +38,7 @@ async function getSchedulingConfig(
     where: { userId: pageOwnerId },
     select: { id: true, workingHoursStart: true, workingHoursEnd: true, workingDays: true, isAlwaysAvailable: true, isDefault: true },
   });
-  const ownerCalendarIds = ownerCalendars.map((c) => c.id);
+  const ownerCalendarIds = ownerCalendars.map((c: { id: string }) => c.id);
 
   // Get owner's settings (non-destructive findFirst)
   const settings = await prisma.userSettings.findFirst({

@@ -61,8 +61,8 @@ async function getSchedulingConfig(
     if (cal) {
       return {
         config: {
-          workingHoursStart: cal.workingHoursStart,
-          workingHoursEnd: cal.workingHoursEnd,
+          workingHoursStart: cal.workingHoursStart ?? "09:00",
+          workingHoursEnd: cal.workingHoursEnd ?? "17:00",
           workingDays: parseWorkingDays(cal.workingDays),
           bufferMinutes,
           isAlwaysAvailable: cal.isAlwaysAvailable,

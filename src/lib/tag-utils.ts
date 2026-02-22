@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@/generated/prisma/client";
 
 export function parseTags(tags: string | null): string[] {
   if (!tags) return [];

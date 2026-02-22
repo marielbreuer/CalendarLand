@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { createEventSchema } from "@/lib/validators";
 import { expandRecurrence } from "@/lib/recurrence";
 import { differenceInMinutes } from "date-fns";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { parseTags, serializeTags, syncTagUsageCounts } from "@/lib/tag-utils";
 import { parseReminders, serializeReminders, computeFireTimes } from "@/lib/reminder-utils";
 import { requireAuth } from "@/lib/auth-guard";

@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette from style-template */
+  --pink: #d946a6;
+  --pink-hot: #ec4899;
+  --pink-deep: #db2777;
+  --cyan: #0891b2;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+  --purple-mid: #8b5cf6;
+  --green: #059669;
+  --orange: #ea580c;
+  --red: #dc2626;
+  --red-dark: #b91c1c;
+
+  /* Accent — used for primary buttons, today indicator, focus rings, active states */
+  --accent: #ec4899;
+  --accent-hover: #db2777;
+  --accent-light: #fce7f3;
+  --accent-ring: rgba(236, 72, 153, 0.4);
+
+  /* Gradients */
+  --grad-hero: linear-gradient(135deg, #ffd6e8 0%, #c3f0ff 100%);
+  --grad-purple-pink: linear-gradient(135deg, #e9d5ff 0%, #ffd6e8 100%);
+  --grad-sidebar: linear-gradient(180deg, #fdf2f8 0%, #f0f9ff 100%);
+
+  /* Calendar colors (for events) */
+  --color-blue: #3b82f6;
+  --color-green: #059669;
+  --color-purple: #a855f7;
+  --color-pink: #ec4899;
+  --color-orange: #f97316;
+  --color-red: #dc2626;
+  --color-teal: #14b8a6;
+  --color-indigo: #6366f1;
+  --color-amber: #f59e0b;
+  --color-cyan: #06b6d4;
+  --color-rose: #f43f5e;
+  --color-lime: #84cc16;
+
+  /* Surface & text */
+  --bg-primary: #ffffff;
+  --bg-secondary: #faf5f7;
+  --bg-tertiary: #f3f0f2;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --border-primary: #e8dfe4;
+  --border-secondary: #d1c8cd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-light: rgba(236, 72, 153, 0.15);
+    --grad-sidebar: linear-gradient(180deg, #1a1225 0%, #111827 100%);
+
+    --bg-primary: #111827;
+    --bg-secondary: #1a1225;
+    --bg-tertiary: #2d2235;
+    --text-primary: #f9fafb;
+    --text-secondary: #a0909b;
+    --text-tertiary: #6b5f66;
+    --border-primary: #3d2f45;
+    --border-secondary: #4b3d55;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Smooth focus outline — brand accent */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Prevent text selection during drag */
+[data-dnd-dragging] {
+  user-select: none;
+}
+
+/* Glass card utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass-card {
+    background: rgba(26, 18, 37, 0.7);
+  }
+}

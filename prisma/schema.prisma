@@ -1,0 +1,276 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("user") // "admin" | "user"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  calendars       Calendar[]
+  tags            Tag[]
+  templates       EventTemplate[]
+  userSettings    UserSettings?
+  schedulingPages SchedulingPage[]
+  notifications   Notification[]
+  invites         Invite[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Invite {
+  id        String    @id @default(cuid())
+  token     String    @unique @default(cuid())
+  email     String?
+  createdBy String
+  creator   User      @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  usedBy    String?
+  createdAt DateTime  @default(now())
+
+  @@index([token])
+  @@map("invites")
+}
+
+model Calendar {
+  id        String   @id @default(cuid())
+  name      String
+  color     String   @default("#3b82f6")
+  isVisible Boolean  @default(true)
+  isDefault Boolean  @default(false)
+  sortOrder Int      @default(0)
+
+  workingHoursStart String  @default("09:00")
+  workingHoursEnd   String  @default("17:00")
+  workingDays       String  @default("[1,2,3,4,5]") // JSON int array, 0=Sun
+  isAlwaysAvailable Boolean @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events          Event[]
+  tasks           Task[]
+  templates       EventTemplate[]
+  schedulingPages SchedulingPage[]
+
+  @@index([userId])
+  @@map("calendars")
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?   @db.Text
+  dueDate     DateTime?
+  status      String    @default("todo") // todo, doing, done
+  priority    String    @default("normal") // low, normal, high, urgent
+  sortOrder   Float     @default(0)
+  tags        String?   @db.Text // JSON string array
+
+  calendarId String
+  calendar   Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notifications Notification[]
+
+  @@index([calendarId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([status, sortOrder])
+  @@map("tasks")
+}
+
+model Event {
+  id          String  @id @default(cuid())
+  title       String
+  description String? @db.Text
+  location    String?
+  meetingLink String?
+
+  startTime DateTime
+  endTime   DateTime
+  isAllDay  Boolean  @default(false)
+  timezone  String   @default("UTC")
+
+  isRecurring   Boolean   @default(false)
+  rrule         String?
+  recurrenceEnd DateTime?
+  exDates       String?   @db.Text
+  seriesId      String?
+  isException   Boolean   @default(false)
+  originalDate  DateTime?
+
+  tags      String? @db.Text // JSON string array
+  reminders String? @db.Text // JSON array: [{"minutes":5},{"minutes":60}]
+  isFocusTime Boolean @default(false)
+
+  calendarId String
+  calendar   Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+
+  participants  Participant[]
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([calendarId])
+  @@index([startTime, endTime])
+  @@index([seriesId])
+  @@index([isRecurring])
+  @@map("events")
+}
+
+model Participant {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([email, eventId])
+  @@map("participants")
+}
+
+model Tag {
+  id         String @id @default(cuid())
+  name       String
+  color      String @default("#6B7280")
+  usageCount Int    @default(0)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@index([usageCount])
+  @@map("tags")
+}
+
+model EventTemplate {
+  id          String  @id @default(cuid())
+  name        String
+  title       String
+  description String? @db.Text
+  location    String?
+  meetingLink String?
+  duration    Int // minutes
+  calendarId  String?
+  calendar    Calendar? @relation(fields: [calendarId], references: [id], onDelete: SetNull)
+  participants String? @db.Text // JSON array
+  tags         String? @db.Text // JSON string array
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([name])
+  @@map("event_templates")
+}
+
+model UserSettings {
+  id                String   @id @default(cuid())
+  bufferMinutes     Int      @default(0)
+  secondaryTimezone String?
+  updatedAt         DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+model SchedulingPage {
+  id            String  @id @default(cuid())
+  slug          String  @unique
+  title         String
+  description   String?
+  durations     String // JSON int array e.g. [15, 30, 60]
+  bufferMinutes Int     @default(0)
+  daysInAdvance Int     @default(14)
+  timezone      String
+  isActive      Boolean @default(true)
+
+  calendarId String?
+  calendar   Calendar? @relation(fields: [calendarId], references: [id], onDelete: SetNull)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+
+  @@index([userId])
+  @@index([calendarId])
+  @@map("scheduling_pages")
+}
+
+model Booking {
+  id               String         @id @default(cuid())
+  schedulingPageId String
+  schedulingPage   SchedulingPage @relation(fields: [schedulingPageId], references: [id], onDelete: Cascade)
+  eventId          String?        @unique
+  guestName        String
+  guestEmail       String
+  guestMessage     String?
+  startTime        DateTime
+  endTime          DateTime
+  duration         Int
+  status           String         @default("confirmed")
+  createdAt        DateTime       @default(now())
+
+  @@index([schedulingPageId])
+  @@map("bookings")
+}
+
+model Notification {
+  id    String @id @default(cuid())
+  type  String // event_reminder | task_deadline | daily_briefing
+  title String
+  body  String @db.Text
+
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  taskId String?
+  task   Task?   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fireAt    DateTime
+  fired     Boolean  @default(false)
+  read      Boolean  @default(false)
+  dismissed Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([fired, fireAt])
+  @@index([eventId])
+  @@index([taskId])
+  @@map("notifications")
+}

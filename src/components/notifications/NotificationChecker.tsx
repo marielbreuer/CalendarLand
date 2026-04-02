@@ -7,6 +7,9 @@ import {
   useUpdateNotification,
   useSyncNotifications,
 } from "@/hooks/useNotifications";
+import { useTimerStore } from "@/stores/timerStore";
+import { useStopTimer } from "@/hooks/useTimeEntries";
+import { useSettings } from "@/hooks/useSettings";
 
 const BRIEFING_KEY = "calendar_land_last_briefing";
 const TASK_SYNC_KEY = "calendar_land_last_task_sync";
@@ -17,6 +20,10 @@ export function NotificationChecker() {
   const updateNotification = useUpdateNotification();
   const syncNotifications = useSyncNotifications();
   const firedRef = useRef<Set<string>>(new Set());
+  const { data: settings } = useSettings();
+  const runningEntryId = useTimerStore((s) => s.runningEntryId);
+  const linkedEventEndTime = useTimerStore((s) => s.linkedEventEndTime);
+  const stopTimer = useStopTimer();
 
   // Request browser notification permission on mount
   useEffect(() => {
@@ -63,6 +70,23 @@ export function NotificationChecker() {
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Auto-stop timer when linked event ends
+  useEffect(() => {
+    if (!runningEntryId || !linkedEventEndTime) return;
+    if (settings?.autoStopTimer === false) return;
+
+    const interval = setInterval(() => {
+      if (new Date() > linkedEventEndTime && runningEntryId) {
+        stopTimer.mutate(
+          { entryId: runningEntryId, endedAt: new Date().toISOString() },
+          { onSuccess: () => toast.success("Timer auto-stopped — event has ended") }
+        );
+      }
+    }, 30_000);
+
+    return () => clearInterval(interval);
+  }, [runningEntryId, linkedEventEndTime, settings?.autoStopTimer]);
 
   // Fire due notifications
   useEffect(() => {

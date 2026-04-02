@@ -62,7 +62,9 @@ export const ModelName = {
   UserSettings: 'UserSettings',
   SchedulingPage: 'SchedulingPage',
   Booking: 'Booking',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  TimeEntry: 'TimeEntry',
+  WeeklyDigest: 'WeeklyDigest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -87,6 +89,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   passwordHash: 'passwordHash',
   role: 'role',
+  lifetimePoints: 'lifetimePoints',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -134,6 +137,7 @@ export const TaskScalarFieldEnum = {
   dueDate: 'dueDate',
   status: 'status',
   priority: 'priority',
+  difficulty: 'difficulty',
   sortOrder: 'sortOrder',
   tags: 'tags',
   calendarId: 'calendarId',
@@ -218,6 +222,7 @@ export const UserSettingsScalarFieldEnum = {
   id: 'id',
   bufferMinutes: 'bufferMinutes',
   secondaryTimezone: 'secondaryTimezone',
+  autoStopTimer: 'autoStopTimer',
   updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
@@ -278,6 +283,35 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const TimeEntryScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  eventId: 'eventId',
+  taskId: 'taskId',
+  calendarId: 'calendarId',
+  userId: 'userId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  duration: 'duration',
+  isBillable: 'isBillable',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
+
+
+export const WeeklyDigestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  weekStart: 'weekStart',
+  data: 'data',
+  generatedAt: 'generatedAt'
+} as const
+
+export type WeeklyDigestScalarFieldEnum = (typeof WeeklyDigestScalarFieldEnum)[keyof typeof WeeklyDigestScalarFieldEnum]
 
 
 export const SortOrder = {

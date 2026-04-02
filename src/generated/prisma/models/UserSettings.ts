@@ -38,6 +38,7 @@ export type UserSettingsMinAggregateOutputType = {
   id: string | null
   bufferMinutes: number | null
   secondaryTimezone: string | null
+  autoStopTimer: boolean | null
   updatedAt: Date | null
   userId: string | null
 }
@@ -46,6 +47,7 @@ export type UserSettingsMaxAggregateOutputType = {
   id: string | null
   bufferMinutes: number | null
   secondaryTimezone: string | null
+  autoStopTimer: boolean | null
   updatedAt: Date | null
   userId: string | null
 }
@@ -54,6 +56,7 @@ export type UserSettingsCountAggregateOutputType = {
   id: number
   bufferMinutes: number
   secondaryTimezone: number
+  autoStopTimer: number
   updatedAt: number
   userId: number
   _all: number
@@ -72,6 +75,7 @@ export type UserSettingsMinAggregateInputType = {
   id?: true
   bufferMinutes?: true
   secondaryTimezone?: true
+  autoStopTimer?: true
   updatedAt?: true
   userId?: true
 }
@@ -80,6 +84,7 @@ export type UserSettingsMaxAggregateInputType = {
   id?: true
   bufferMinutes?: true
   secondaryTimezone?: true
+  autoStopTimer?: true
   updatedAt?: true
   userId?: true
 }
@@ -88,6 +93,7 @@ export type UserSettingsCountAggregateInputType = {
   id?: true
   bufferMinutes?: true
   secondaryTimezone?: true
+  autoStopTimer?: true
   updatedAt?: true
   userId?: true
   _all?: true
@@ -183,6 +189,7 @@ export type UserSettingsGroupByOutputType = {
   id: string
   bufferMinutes: number
   secondaryTimezone: string | null
+  autoStopTimer: boolean
   updatedAt: Date
   userId: string
   _count: UserSettingsCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type UserSettingsWhereInput = {
   id?: Prisma.StringFilter<"UserSettings"> | string
   bufferMinutes?: Prisma.IntFilter<"UserSettings"> | number
   secondaryTimezone?: Prisma.StringNullableFilter<"UserSettings"> | string | null
+  autoStopTimer?: Prisma.BoolFilter<"UserSettings"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"UserSettings"> | Date | string
   userId?: Prisma.StringFilter<"UserSettings"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -223,6 +231,7 @@ export type UserSettingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   bufferMinutes?: Prisma.SortOrder
   secondaryTimezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  autoStopTimer?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -236,6 +245,7 @@ export type UserSettingsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserSettingsWhereInput | Prisma.UserSettingsWhereInput[]
   bufferMinutes?: Prisma.IntFilter<"UserSettings"> | number
   secondaryTimezone?: Prisma.StringNullableFilter<"UserSettings"> | string | null
+  autoStopTimer?: Prisma.BoolFilter<"UserSettings"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"UserSettings"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
@@ -244,6 +254,7 @@ export type UserSettingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   bufferMinutes?: Prisma.SortOrder
   secondaryTimezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  autoStopTimer?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.UserSettingsCountOrderByAggregateInput
@@ -260,6 +271,7 @@ export type UserSettingsScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserSettings"> | string
   bufferMinutes?: Prisma.IntWithAggregatesFilter<"UserSettings"> | number
   secondaryTimezone?: Prisma.StringNullableWithAggregatesFilter<"UserSettings"> | string | null
+  autoStopTimer?: Prisma.BoolWithAggregatesFilter<"UserSettings"> | boolean
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserSettings"> | Date | string
   userId?: Prisma.StringWithAggregatesFilter<"UserSettings"> | string
 }
@@ -268,6 +280,7 @@ export type UserSettingsCreateInput = {
   id?: string
   bufferMinutes?: number
   secondaryTimezone?: string | null
+  autoStopTimer?: boolean
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserSettingsInput
 }
@@ -276,6 +289,7 @@ export type UserSettingsUncheckedCreateInput = {
   id?: string
   bufferMinutes?: number
   secondaryTimezone?: string | null
+  autoStopTimer?: boolean
   updatedAt?: Date | string
   userId: string
 }
@@ -284,6 +298,7 @@ export type UserSettingsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserSettingsNestedInput
 }
@@ -292,6 +307,7 @@ export type UserSettingsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -300,6 +316,7 @@ export type UserSettingsCreateManyInput = {
   id?: string
   bufferMinutes?: number
   secondaryTimezone?: string | null
+  autoStopTimer?: boolean
   updatedAt?: Date | string
   userId: string
 }
@@ -308,6 +325,7 @@ export type UserSettingsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -315,6 +333,7 @@ export type UserSettingsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -328,6 +347,7 @@ export type UserSettingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bufferMinutes?: Prisma.SortOrder
   secondaryTimezone?: Prisma.SortOrder
+  autoStopTimer?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -340,6 +360,7 @@ export type UserSettingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bufferMinutes?: Prisma.SortOrder
   secondaryTimezone?: Prisma.SortOrder
+  autoStopTimer?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -348,6 +369,7 @@ export type UserSettingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bufferMinutes?: Prisma.SortOrder
   secondaryTimezone?: Prisma.SortOrder
+  autoStopTimer?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -392,6 +414,7 @@ export type UserSettingsCreateWithoutUserInput = {
   id?: string
   bufferMinutes?: number
   secondaryTimezone?: string | null
+  autoStopTimer?: boolean
   updatedAt?: Date | string
 }
 
@@ -399,6 +422,7 @@ export type UserSettingsUncheckedCreateWithoutUserInput = {
   id?: string
   bufferMinutes?: number
   secondaryTimezone?: string | null
+  autoStopTimer?: boolean
   updatedAt?: Date | string
 }
 
@@ -422,6 +446,7 @@ export type UserSettingsUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -429,6 +454,7 @@ export type UserSettingsUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   bufferMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryTimezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoStopTimer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -438,6 +464,7 @@ export type UserSettingsSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   bufferMinutes?: boolean
   secondaryTimezone?: boolean
+  autoStopTimer?: boolean
   updatedAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -447,6 +474,7 @@ export type UserSettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   bufferMinutes?: boolean
   secondaryTimezone?: boolean
+  autoStopTimer?: boolean
   updatedAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -456,6 +484,7 @@ export type UserSettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   bufferMinutes?: boolean
   secondaryTimezone?: boolean
+  autoStopTimer?: boolean
   updatedAt?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -465,11 +494,12 @@ export type UserSettingsSelectScalar = {
   id?: boolean
   bufferMinutes?: boolean
   secondaryTimezone?: boolean
+  autoStopTimer?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type UserSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bufferMinutes" | "secondaryTimezone" | "updatedAt" | "userId", ExtArgs["result"]["userSettings"]>
+export type UserSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bufferMinutes" | "secondaryTimezone" | "autoStopTimer" | "updatedAt" | "userId", ExtArgs["result"]["userSettings"]>
 export type UserSettingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -489,6 +519,7 @@ export type $UserSettingsPayload<ExtArgs extends runtime.Types.Extensions.Intern
     id: string
     bufferMinutes: number
     secondaryTimezone: string | null
+    autoStopTimer: boolean
     updatedAt: Date
     userId: string
   }, ExtArgs["result"]["userSettings"]>
@@ -918,6 +949,7 @@ export interface UserSettingsFieldRefs {
   readonly id: Prisma.FieldRef<"UserSettings", 'String'>
   readonly bufferMinutes: Prisma.FieldRef<"UserSettings", 'Int'>
   readonly secondaryTimezone: Prisma.FieldRef<"UserSettings", 'String'>
+  readonly autoStopTimer: Prisma.FieldRef<"UserSettings", 'Boolean'>
   readonly updatedAt: Prisma.FieldRef<"UserSettings", 'DateTime'>
   readonly userId: Prisma.FieldRef<"UserSettings", 'String'>
 }

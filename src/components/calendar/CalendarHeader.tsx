@@ -8,6 +8,9 @@ import { useUIStore } from "@/stores/uiStore";
 import { formatHeaderDate } from "@/lib/dates";
 import { Button } from "@/components/ui/Button";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { RunningTimerIndicator } from "@/components/time-tracking/RunningTimerIndicator";
+import { PomodoroButton } from "@/components/pomodoro/PomodoroButton";
+import { useUserPoints } from "@/hooks/useUserPoints";
 import type { CalendarView } from "@/types/common";
 
 const views: { label: string; value: CalendarView }[] = [
@@ -22,6 +25,7 @@ const routeTabs = [
   { label: "Tasks", href: "/calendar/tasks" },
   { label: "Board", href: "/calendar/board" },
   { label: "Scheduling", href: "/calendar/scheduling" },
+  { label: "Analytics", href: "/calendar/analytics" },
 ];
 
 function formatTzShort(tz: string): string {
@@ -42,6 +46,7 @@ export function CalendarHeader() {
   const { view, selectedDate, setView, goToToday, goForward, goBackward, timezone } =
     useCalendarViewStore();
   const { data: session } = useSession();
+  const { data: userProfile } = useUserPoints();
   const toggleSidebar = useUIStore((s) => s.toggleSidebar);
   const openCreateTaskModal = useUIStore((s) => s.openCreateTaskModal);
   const openSearchModal = useUIStore((s) => s.openSearchModal);
@@ -52,12 +57,16 @@ export function CalendarHeader() {
 
   const isCalendarRoute = pathname === "/calendar";
   const isTaskRoute = pathname === "/calendar/tasks" || pathname === "/calendar/board";
-  const isSchedulingRoute = pathname?.startsWith("/calendar/scheduling") || pathname?.startsWith("/calendar/settings");
+  const isSchedulingRoute =
+    pathname?.startsWith("/calendar/scheduling") ||
+    pathname?.startsWith("/calendar/settings") ||
+    pathname?.startsWith("/calendar/analytics");
 
   function getActiveTab() {
     if (pathname === "/calendar/tasks") return "/calendar/tasks";
     if (pathname === "/calendar/board") return "/calendar/board";
     if (pathname?.startsWith("/calendar/scheduling")) return "/calendar/scheduling";
+    if (pathname?.startsWith("/calendar/analytics")) return "/calendar/analytics";
     return "/calendar";
   }
 
@@ -100,6 +109,12 @@ export function CalendarHeader() {
           </Link>
         ))}
       </div>
+
+      {/* Pomodoro timer */}
+      <PomodoroButton />
+
+      {/* Running timer indicator */}
+      <RunningTimerIndicator />
 
       {/* Calendar-specific controls */}
       {isCalendarRoute && (
@@ -202,6 +217,15 @@ export function CalendarHeader() {
             </svg>
           </Link>
           <div className="flex items-center gap-1 flex-shrink-0">
+            {userProfile && userProfile.lifetimePoints > 0 && (
+              <span
+                className="text-[10px] px-1.5 py-0.5 rounded font-medium hidden md:inline-flex items-center gap-0.5"
+                style={{ background: "rgba(245,158,11,0.15)", color: "#d97706" }}
+                title="Lifetime points"
+              >
+                ⭐ {userProfile.lifetimePoints}
+              </span>
+            )}
             {session?.user?.name && (
               <span className="text-xs hidden md:block" style={{ color: "var(--text-secondary, #6b7280)" }}>
                 {session.user.name}
@@ -291,6 +315,15 @@ export function CalendarHeader() {
             </svg>
           </Link>
           <div className="flex items-center gap-1 flex-shrink-0">
+            {userProfile && userProfile.lifetimePoints > 0 && (
+              <span
+                className="text-[10px] px-1.5 py-0.5 rounded font-medium hidden md:inline-flex items-center gap-0.5"
+                style={{ background: "rgba(245,158,11,0.15)", color: "#d97706" }}
+                title="Lifetime points"
+              >
+                ⭐ {userProfile.lifetimePoints}
+              </span>
+            )}
             {session?.user?.name && (
               <span className="text-xs hidden md:block" style={{ color: "var(--text-secondary, #6b7280)" }}>
                 {session.user.name}

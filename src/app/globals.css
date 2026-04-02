@@ -123,3 +123,16 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(26, 18, 37, 0.7);
   }
 }
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Bottom sheet slide-up animation */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.animate-slideUp {
+  animation: slideUp 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
+}

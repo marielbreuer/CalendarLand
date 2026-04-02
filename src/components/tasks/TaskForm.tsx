@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { TagPicker } from "@/components/shared/TagPicker";
 import type { Calendar } from "@/types/calendar";
-import type { Task, CreateTaskInput, TaskStatus, TaskPriority } from "@/types/task";
+import type { Task, CreateTaskInput, TaskStatus, TaskPriority, TaskDifficulty } from "@/types/task";
 import { format } from "date-fns";
 
 interface TaskFormProps {
@@ -30,6 +30,12 @@ const priorityOptions: { label: string; value: TaskPriority }[] = [
   { label: "Urgent", value: "urgent" },
 ];
 
+const difficultyOptions: { label: string; value: TaskDifficulty; color: string; pts: string }[] = [
+  { label: "Easy", value: "easy", color: "#22c55e", pts: "1 pt" },
+  { label: "Medium", value: "medium", color: "#f59e0b", pts: "2 pts" },
+  { label: "Hard", value: "hard", color: "#ef4444", pts: "5 pts" },
+];
+
 export function TaskForm({
   mode,
   calendars,
@@ -46,6 +52,7 @@ export function TaskForm({
   const [priority, setPriority] = useState<TaskPriority>("normal");
   const [calendarId, setCalendarId] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [difficulty, setDifficulty] = useState<TaskDifficulty | null>(null);
 
   useEffect(() => {
     if (existingTask) {
@@ -56,6 +63,7 @@ export function TaskForm({
       setPriority(existingTask.priority);
       setCalendarId(existingTask.calendarId);
       setTags(existingTask.tags ?? []);
+      setDifficulty(existingTask.difficulty ?? null);
     }
   }, [existingTask]);
 
@@ -76,6 +84,7 @@ export function TaskForm({
       dueDate: dueDate ? new Date(dueDate + "T00:00:00").toISOString() : undefined,
       status,
       priority,
+      difficulty: difficulty ?? undefined,
       calendarId,
       tags: tags.length > 0 ? tags : undefined,
     });
@@ -127,6 +136,30 @@ export function TaskForm({
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1">
+          Difficulty <span className="font-normal text-[var(--text-tertiary)]">(optional — awards points on completion)</span>
+        </label>
+        <div className="flex gap-2">
+          {difficultyOptions.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setDifficulty(difficulty === opt.value ? null : opt.value)}
+              className={`flex-1 py-1.5 rounded-lg border text-xs font-medium transition-all ${
+                difficulty === opt.value
+                  ? "border-transparent text-white"
+                  : "border-[var(--border-primary)] text-[var(--text-secondary)] hover:border-[var(--accent)]"
+              }`}
+              style={difficulty === opt.value ? { background: opt.color, borderColor: opt.color } : {}}
+            >
+              {opt.label}
+              <span className="ml-1 opacity-70">{opt.pts}</span>
+            </button>
+          ))}
         </div>
       </div>
 

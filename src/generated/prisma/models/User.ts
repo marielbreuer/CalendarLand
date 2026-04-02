@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  lifetimePoints: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  lifetimePoints: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -30,6 +40,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   passwordHash: string | null
   role: string | null
+  lifetimePoints: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   passwordHash: string | null
   role: string | null
+  lifetimePoints: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,11 +62,20 @@ export type UserCountAggregateOutputType = {
   name: number
   passwordHash: number
   role: number
+  lifetimePoints: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  lifetimePoints?: true
+}
+
+export type UserSumAggregateInputType = {
+  lifetimePoints?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -62,6 +83,7 @@ export type UserMinAggregateInputType = {
   name?: true
   passwordHash?: true
   role?: true
+  lifetimePoints?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +94,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   passwordHash?: true
   role?: true
+  lifetimePoints?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +105,7 @@ export type UserCountAggregateInputType = {
   name?: true
   passwordHash?: true
   role?: true
+  lifetimePoints?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -125,6 +149,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -155,6 +191,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -165,9 +203,12 @@ export type UserGroupByOutputType = {
   name: string
   passwordHash: string
   role: string
+  lifetimePoints: number
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -196,6 +237,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  lifetimePoints?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   calendars?: Prisma.CalendarListRelationFilter
@@ -205,6 +247,8 @@ export type UserWhereInput = {
   schedulingPages?: Prisma.SchedulingPageListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   invites?: Prisma.InviteListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  weeklyDigests?: Prisma.WeeklyDigestListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -213,6 +257,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  lifetimePoints?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   calendars?: Prisma.CalendarOrderByRelationAggregateInput
@@ -222,6 +267,8 @@ export type UserOrderByWithRelationInput = {
   schedulingPages?: Prisma.SchedulingPageOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   invites?: Prisma.InviteOrderByRelationAggregateInput
+  timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
+  weeklyDigests?: Prisma.WeeklyDigestOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -233,6 +280,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  lifetimePoints?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   calendars?: Prisma.CalendarListRelationFilter
@@ -242,6 +290,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   schedulingPages?: Prisma.SchedulingPageListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   invites?: Prisma.InviteListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  weeklyDigests?: Prisma.WeeklyDigestListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -250,11 +300,14 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  lifetimePoints?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -266,6 +319,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  lifetimePoints?: Prisma.IntWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -276,6 +330,7 @@ export type UserCreateInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -285,6 +340,8 @@ export type UserCreateInput = {
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -293,6 +350,7 @@ export type UserUncheckedCreateInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -302,6 +360,8 @@ export type UserUncheckedCreateInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -310,6 +370,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -319,6 +380,8 @@ export type UserUpdateInput = {
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -327,6 +390,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -336,6 +400,8 @@ export type UserUncheckedUpdateInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -344,6 +410,7 @@ export type UserCreateManyInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -354,6 +421,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -364,6 +432,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,8 +443,13 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  lifetimePoints?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  lifetimePoints?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -384,6 +458,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  lifetimePoints?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -394,8 +469,13 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  lifetimePoints?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  lifetimePoints?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -405,6 +485,14 @@ export type UserScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -509,12 +597,41 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutTimeEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTimeEntriesInput, Prisma.UserUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTimeEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTimeEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTimeEntriesInput, Prisma.UserUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTimeEntriesInput
+  upsert?: Prisma.UserUpsertWithoutTimeEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTimeEntriesInput, Prisma.UserUpdateWithoutTimeEntriesInput>, Prisma.UserUncheckedUpdateWithoutTimeEntriesInput>
+}
+
+export type UserCreateNestedOneWithoutWeeklyDigestsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeeklyDigestsInput, Prisma.UserUncheckedCreateWithoutWeeklyDigestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeeklyDigestsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWeeklyDigestsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeeklyDigestsInput, Prisma.UserUncheckedCreateWithoutWeeklyDigestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeeklyDigestsInput
+  upsert?: Prisma.UserUpsertWithoutWeeklyDigestsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWeeklyDigestsInput, Prisma.UserUpdateWithoutWeeklyDigestsInput>, Prisma.UserUncheckedUpdateWithoutWeeklyDigestsInput>
+}
+
 export type UserCreateWithoutInvitesInput = {
   id?: string
   email: string
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -523,6 +640,8 @@ export type UserCreateWithoutInvitesInput = {
   userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvitesInput = {
@@ -531,6 +650,7 @@ export type UserUncheckedCreateWithoutInvitesInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -539,6 +659,8 @@ export type UserUncheckedCreateWithoutInvitesInput = {
   userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvitesInput = {
@@ -563,6 +685,7 @@ export type UserUpdateWithoutInvitesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -571,6 +694,8 @@ export type UserUpdateWithoutInvitesInput = {
   userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvitesInput = {
@@ -579,6 +704,7 @@ export type UserUncheckedUpdateWithoutInvitesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -587,6 +713,8 @@ export type UserUncheckedUpdateWithoutInvitesInput = {
   userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCalendarsInput = {
@@ -595,6 +723,7 @@ export type UserCreateWithoutCalendarsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagCreateNestedManyWithoutUserInput
@@ -603,6 +732,8 @@ export type UserCreateWithoutCalendarsInput = {
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCalendarsInput = {
@@ -611,6 +742,7 @@ export type UserUncheckedCreateWithoutCalendarsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
@@ -619,6 +751,8 @@ export type UserUncheckedCreateWithoutCalendarsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCalendarsInput = {
@@ -643,6 +777,7 @@ export type UserUpdateWithoutCalendarsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUpdateManyWithoutUserNestedInput
@@ -651,6 +786,8 @@ export type UserUpdateWithoutCalendarsInput = {
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCalendarsInput = {
@@ -659,6 +796,7 @@ export type UserUncheckedUpdateWithoutCalendarsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
@@ -667,6 +805,8 @@ export type UserUncheckedUpdateWithoutCalendarsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTagsInput = {
@@ -675,6 +815,7 @@ export type UserCreateWithoutTagsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -683,6 +824,8 @@ export type UserCreateWithoutTagsInput = {
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTagsInput = {
@@ -691,6 +834,7 @@ export type UserUncheckedCreateWithoutTagsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -699,6 +843,8 @@ export type UserUncheckedCreateWithoutTagsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTagsInput = {
@@ -723,6 +869,7 @@ export type UserUpdateWithoutTagsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -731,6 +878,8 @@ export type UserUpdateWithoutTagsInput = {
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTagsInput = {
@@ -739,6 +888,7 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -747,6 +897,8 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTemplatesInput = {
@@ -755,6 +907,7 @@ export type UserCreateWithoutTemplatesInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -763,6 +916,8 @@ export type UserCreateWithoutTemplatesInput = {
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTemplatesInput = {
@@ -771,6 +926,7 @@ export type UserUncheckedCreateWithoutTemplatesInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -779,6 +935,8 @@ export type UserUncheckedCreateWithoutTemplatesInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTemplatesInput = {
@@ -803,6 +961,7 @@ export type UserUpdateWithoutTemplatesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -811,6 +970,8 @@ export type UserUpdateWithoutTemplatesInput = {
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTemplatesInput = {
@@ -819,6 +980,7 @@ export type UserUncheckedUpdateWithoutTemplatesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -827,6 +989,8 @@ export type UserUncheckedUpdateWithoutTemplatesInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserSettingsInput = {
@@ -835,6 +999,7 @@ export type UserCreateWithoutUserSettingsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -843,6 +1008,8 @@ export type UserCreateWithoutUserSettingsInput = {
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserSettingsInput = {
@@ -851,6 +1018,7 @@ export type UserUncheckedCreateWithoutUserSettingsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -859,6 +1027,8 @@ export type UserUncheckedCreateWithoutUserSettingsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserSettingsInput = {
@@ -883,6 +1053,7 @@ export type UserUpdateWithoutUserSettingsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -891,6 +1062,8 @@ export type UserUpdateWithoutUserSettingsInput = {
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserSettingsInput = {
@@ -899,6 +1072,7 @@ export type UserUncheckedUpdateWithoutUserSettingsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -907,6 +1081,8 @@ export type UserUncheckedUpdateWithoutUserSettingsInput = {
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSchedulingPagesInput = {
@@ -915,6 +1091,7 @@ export type UserCreateWithoutSchedulingPagesInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -923,6 +1100,8 @@ export type UserCreateWithoutSchedulingPagesInput = {
   userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSchedulingPagesInput = {
@@ -931,6 +1110,7 @@ export type UserUncheckedCreateWithoutSchedulingPagesInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -939,6 +1119,8 @@ export type UserUncheckedCreateWithoutSchedulingPagesInput = {
   userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSchedulingPagesInput = {
@@ -963,6 +1145,7 @@ export type UserUpdateWithoutSchedulingPagesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -971,6 +1154,8 @@ export type UserUpdateWithoutSchedulingPagesInput = {
   userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSchedulingPagesInput = {
@@ -979,6 +1164,7 @@ export type UserUncheckedUpdateWithoutSchedulingPagesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -987,6 +1173,8 @@ export type UserUncheckedUpdateWithoutSchedulingPagesInput = {
   userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -995,6 +1183,7 @@ export type UserCreateWithoutNotificationsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
@@ -1003,6 +1192,8 @@ export type UserCreateWithoutNotificationsInput = {
   userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1011,6 +1202,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   name: string
   passwordHash: string
   role?: string
+  lifetimePoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
@@ -1019,6 +1211,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1043,6 +1237,7 @@ export type UserUpdateWithoutNotificationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
@@ -1051,6 +1246,8 @@ export type UserUpdateWithoutNotificationsInput = {
   userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1059,6 +1256,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
@@ -1067,6 +1265,192 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTimeEntriesInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTimeEntriesInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTimeEntriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTimeEntriesInput, Prisma.UserUncheckedCreateWithoutTimeEntriesInput>
+}
+
+export type UserUpsertWithoutTimeEntriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTimeEntriesInput, Prisma.UserUncheckedUpdateWithoutTimeEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTimeEntriesInput, Prisma.UserUncheckedCreateWithoutTimeEntriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTimeEntriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTimeEntriesInput, Prisma.UserUncheckedUpdateWithoutTimeEntriesInput>
+}
+
+export type UserUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWeeklyDigestsInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWeeklyDigestsInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWeeklyDigestsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeeklyDigestsInput, Prisma.UserUncheckedCreateWithoutWeeklyDigestsInput>
+}
+
+export type UserUpsertWithoutWeeklyDigestsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWeeklyDigestsInput, Prisma.UserUncheckedUpdateWithoutWeeklyDigestsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeeklyDigestsInput, Prisma.UserUncheckedCreateWithoutWeeklyDigestsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWeeklyDigestsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWeeklyDigestsInput, Prisma.UserUncheckedUpdateWithoutWeeklyDigestsInput>
+}
+
+export type UserUpdateWithoutWeeklyDigestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWeeklyDigestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1081,6 +1465,8 @@ export type UserCountOutputType = {
   schedulingPages: number
   notifications: number
   invites: number
+  timeEntries: number
+  weeklyDigests: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1090,6 +1476,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   schedulingPages?: boolean | UserCountOutputTypeCountSchedulingPagesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   invites?: boolean | UserCountOutputTypeCountInvitesArgs
+  timeEntries?: boolean | UserCountOutputTypeCountTimeEntriesArgs
+  weeklyDigests?: boolean | UserCountOutputTypeCountWeeklyDigestsArgs
 }
 
 /**
@@ -1144,6 +1532,20 @@ export type UserCountOutputTypeCountInvitesArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.InviteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTimeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TimeEntryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWeeklyDigestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WeeklyDigestWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1151,6 +1553,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   passwordHash?: boolean
   role?: boolean
+  lifetimePoints?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   calendars?: boolean | Prisma.User$calendarsArgs<ExtArgs>
@@ -1160,6 +1563,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   schedulingPages?: boolean | Prisma.User$schedulingPagesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   invites?: boolean | Prisma.User$invitesArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.User$timeEntriesArgs<ExtArgs>
+  weeklyDigests?: boolean | Prisma.User$weeklyDigestsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1169,6 +1574,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   passwordHash?: boolean
   role?: boolean
+  lifetimePoints?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1179,6 +1585,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   passwordHash?: boolean
   role?: boolean
+  lifetimePoints?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1189,11 +1596,12 @@ export type UserSelectScalar = {
   name?: boolean
   passwordHash?: boolean
   role?: boolean
+  lifetimePoints?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "lifetimePoints" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   calendars?: boolean | Prisma.User$calendarsArgs<ExtArgs>
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
@@ -1202,6 +1610,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   schedulingPages?: boolean | Prisma.User$schedulingPagesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   invites?: boolean | Prisma.User$invitesArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.User$timeEntriesArgs<ExtArgs>
+  weeklyDigests?: boolean | Prisma.User$weeklyDigestsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1217,6 +1627,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     schedulingPages: Prisma.$SchedulingPagePayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     invites: Prisma.$InvitePayload<ExtArgs>[]
+    timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
+    weeklyDigests: Prisma.$WeeklyDigestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1224,6 +1636,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     passwordHash: string
     role: string
+    lifetimePoints: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1627,6 +2040,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   schedulingPages<T extends Prisma.User$schedulingPagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$schedulingPagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchedulingPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invites<T extends Prisma.User$invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  timeEntries<T extends Prisma.User$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  weeklyDigests<T extends Prisma.User$weeklyDigestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$weeklyDigestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeeklyDigestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1661,6 +2076,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly lifetimePoints: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -2211,6 +2627,54 @@ export type User$invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.InviteScalarFieldEnum | Prisma.InviteScalarFieldEnum[]
+}
+
+/**
+ * User.timeEntries
+ */
+export type User$timeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TimeEntry
+   */
+  select?: Prisma.TimeEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TimeEntry
+   */
+  omit?: Prisma.TimeEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TimeEntryInclude<ExtArgs> | null
+  where?: Prisma.TimeEntryWhereInput
+  orderBy?: Prisma.TimeEntryOrderByWithRelationInput | Prisma.TimeEntryOrderByWithRelationInput[]
+  cursor?: Prisma.TimeEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TimeEntryScalarFieldEnum | Prisma.TimeEntryScalarFieldEnum[]
+}
+
+/**
+ * User.weeklyDigests
+ */
+export type User$weeklyDigestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WeeklyDigest
+   */
+  select?: Prisma.WeeklyDigestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WeeklyDigest
+   */
+  omit?: Prisma.WeeklyDigestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WeeklyDigestInclude<ExtArgs> | null
+  where?: Prisma.WeeklyDigestWhereInput
+  orderBy?: Prisma.WeeklyDigestOrderByWithRelationInput | Prisma.WeeklyDigestOrderByWithRelationInput[]
+  cursor?: Prisma.WeeklyDigestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WeeklyDigestScalarFieldEnum | Prisma.WeeklyDigestScalarFieldEnum[]
 }
 
 /**

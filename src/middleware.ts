@@ -19,6 +19,11 @@ export default auth((req) => {
     pathname === "/favicon.ico" ||
     pathname === "/api/health";
 
+  // Redirect authenticated users away from the login page
+  if (pathname.startsWith("/login") && req.auth) {
+    return NextResponse.redirect(new URL("/calendar", req.url));
+  }
+
   if (isPublic) {
     return NextResponse.next();
   }

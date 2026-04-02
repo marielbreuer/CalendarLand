@@ -24,6 +24,7 @@ import {
   areIntervalsOverlapping,
 } from "date-fns";
 import type { CalendarView, DateRange } from "@/types/common";
+import type { AnalyticsRange } from "@/types/analytics";
 
 export function getDayRange(date: Date): DateRange {
   return { start: startOfDay(date), end: endOfDay(date) };
@@ -153,6 +154,31 @@ export function eventsOverlap(
     { start: aStart, end: aEnd },
     { start: bStart, end: bEnd }
   );
+}
+
+export function getAnalyticsRange(
+  range: AnalyticsRange,
+  customStart?: string,
+  customEnd?: string
+): DateRange {
+  const now = new Date();
+  switch (range) {
+    case "this_week":
+      return getWeekRange(now);
+    case "last_week":
+      return getWeekRange(subWeeks(now, 1));
+    case "this_month":
+      return { start: startOfMonth(now), end: endOfMonth(now) };
+    case "last_month": {
+      const lastMonth = subMonths(now, 1);
+      return { start: startOfMonth(lastMonth), end: endOfMonth(lastMonth) };
+    }
+    case "custom":
+      return {
+        start: customStart ? new Date(customStart) : startOfMonth(now),
+        end: customEnd ? new Date(customEnd) : endOfMonth(now),
+      };
+  }
 }
 
 export {

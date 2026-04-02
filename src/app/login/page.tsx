@@ -1,29 +1,30 @@
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string }>;
-}) {
-  const params = await searchParams;
-  const hasError = !!params?.error;
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import PasswordInput from "./PasswordInput";
 
-  async function loginAction(formData: FormData) {
-    "use server";
-    try {
-      await signIn("credentials", {
-        email: formData.get("email"),
-        password: formData.get("password"),
-        redirectTo: "/calendar",
-      });
-    } catch (err) {
-      if (err instanceof AuthError) {
-        redirect("/login?error=1");
-      }
-      // NEXT_REDIRECT must be rethrown
-      throw err;
+export default function LoginPage() {
+  const router = useRouter();
+  const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setHasError(false);
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const result = await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+      redirect: false,
+    });
+    setLoading(false);
+    if (result?.error) {
+      setHasError(true);
+    } else {
+      router.push("/calendar");
     }
   }
 
@@ -55,7 +56,7 @@ export default async function LoginPage({
         </div>
 
         <form
-          action={loginAction}
+          onSubmit={handleSubmit}
           className="rounded-2xl border shadow-xl p-6 space-y-4"
           style={{
             background: "var(--bg-primary, #fff)",
@@ -77,9 +78,7 @@ export default async function LoginPage({
               required
               className="w-full px-3 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2"
               style={{
-                borderColor: hasError
-                  ? "#ef4444"
-                  : "var(--border-primary, #e5e7eb)",
+                borderColor: hasError ? "#ef4444" : "var(--border-primary, #e5e7eb)",
                 background: "var(--bg-secondary, #f9fafb)",
                 color: "var(--text-primary, #111827)",
               }}
@@ -93,20 +92,7 @@ export default async function LoginPage({
             >
               Password
             </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              className="w-full px-3 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2"
-              style={{
-                borderColor: hasError
-                  ? "#ef4444"
-                  : "var(--border-primary, #e5e7eb)",
-                background: "var(--bg-secondary, #f9fafb)",
-                color: "var(--text-primary, #111827)",
-              }}
-            />
+            <PasswordInput hasError={hasError} />
             {hasError && (
               <p className="mt-1.5 text-xs text-red-500">
                 Incorrect email or password.
@@ -116,10 +102,11 @@ export default async function LoginPage({
 
           <button
             type="submit"
-            className="w-full py-2 px-4 rounded-lg text-sm font-medium transition-opacity"
+            disabled={loading}
+            className="w-full py-2 px-4 rounded-lg text-sm font-medium transition-opacity disabled:opacity-60"
             style={{ background: "var(--pink, #ec4899)", color: "#fff" }}
           >
-            Sign in
+            {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
       </div>

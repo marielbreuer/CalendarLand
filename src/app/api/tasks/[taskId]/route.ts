@@ -58,6 +58,19 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     },
   });
 
+  // Award / revoke points on status change
+  if (parsed.data.status !== undefined && parsed.data.status !== existing.status) {
+    const difficulty = (task.difficulty ?? existing.difficulty) as string | null;
+    const points = difficulty === "hard" ? 5 : difficulty === "medium" ? 2 : 1;
+    const wasCompleted = existing.status === "done";
+    const isCompleted = parsed.data.status === "done";
+    if (isCompleted && !wasCompleted) {
+      await prisma.user.update({ where: { id: userId }, data: { lifetimePoints: { increment: points } } });
+    } else if (!isCompleted && wasCompleted) {
+      await prisma.user.update({ where: { id: userId }, data: { lifetimePoints: { decrement: points } } });
+    }
+  }
+
   // Sync tag usage counts
   if (tags !== undefined) {
     const oldTags = parseTags(existing.tags);

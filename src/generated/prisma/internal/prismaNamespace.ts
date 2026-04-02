@@ -395,7 +395,9 @@ export const ModelName = {
   UserSettings: 'UserSettings',
   SchedulingPage: 'SchedulingPage',
   Booking: 'Booking',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  TimeEntry: 'TimeEntry',
+  WeeklyDigest: 'WeeklyDigest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "invite" | "calendar" | "task" | "event" | "participant" | "tag" | "eventTemplate" | "userSettings" | "schedulingPage" | "booking" | "notification"
+    modelProps: "user" | "invite" | "calendar" | "task" | "event" | "participant" | "tag" | "eventTemplate" | "userSettings" | "schedulingPage" | "booking" | "notification" | "timeEntry" | "weeklyDigest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1303,6 +1305,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TimeEntry: {
+      payload: Prisma.$TimeEntryPayload<ExtArgs>
+      fields: Prisma.TimeEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TimeEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TimeEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.TimeEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TimeEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        findMany: {
+          args: Prisma.TimeEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+        }
+        create: {
+          args: Prisma.TimeEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        createMany: {
+          args: Prisma.TimeEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TimeEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.TimeEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        update: {
+          args: Prisma.TimeEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.TimeEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TimeEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TimeEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.TimeEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimeEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.TimeEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTimeEntry>
+        }
+        groupBy: {
+          args: Prisma.TimeEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimeEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TimeEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimeEntryCountAggregateOutputType> | number
+        }
+      }
+    }
+    WeeklyDigest: {
+      payload: Prisma.$WeeklyDigestPayload<ExtArgs>
+      fields: Prisma.WeeklyDigestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WeeklyDigestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WeeklyDigestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        findFirst: {
+          args: Prisma.WeeklyDigestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WeeklyDigestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        findMany: {
+          args: Prisma.WeeklyDigestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>[]
+        }
+        create: {
+          args: Prisma.WeeklyDigestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        createMany: {
+          args: Prisma.WeeklyDigestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WeeklyDigestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>[]
+        }
+        delete: {
+          args: Prisma.WeeklyDigestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        update: {
+          args: Prisma.WeeklyDigestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        deleteMany: {
+          args: Prisma.WeeklyDigestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WeeklyDigestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WeeklyDigestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>[]
+        }
+        upsert: {
+          args: Prisma.WeeklyDigestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklyDigestPayload>
+        }
+        aggregate: {
+          args: Prisma.WeeklyDigestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWeeklyDigest>
+        }
+        groupBy: {
+          args: Prisma.WeeklyDigestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeeklyDigestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WeeklyDigestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeeklyDigestCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1348,6 +1498,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   passwordHash: 'passwordHash',
   role: 'role',
+  lifetimePoints: 'lifetimePoints',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1395,6 +1546,7 @@ export const TaskScalarFieldEnum = {
   dueDate: 'dueDate',
   status: 'status',
   priority: 'priority',
+  difficulty: 'difficulty',
   sortOrder: 'sortOrder',
   tags: 'tags',
   calendarId: 'calendarId',
@@ -1479,6 +1631,7 @@ export const UserSettingsScalarFieldEnum = {
   id: 'id',
   bufferMinutes: 'bufferMinutes',
   secondaryTimezone: 'secondaryTimezone',
+  autoStopTimer: 'autoStopTimer',
   updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
@@ -1541,6 +1694,35 @@ export const NotificationScalarFieldEnum = {
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+export const TimeEntryScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  eventId: 'eventId',
+  taskId: 'taskId',
+  calendarId: 'calendarId',
+  userId: 'userId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  duration: 'duration',
+  isBillable: 'isBillable',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
+
+
+export const WeeklyDigestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  weekStart: 'weekStart',
+  data: 'data',
+  generatedAt: 'generatedAt'
+} as const
+
+export type WeeklyDigestScalarFieldEnum = (typeof WeeklyDigestScalarFieldEnum)[keyof typeof WeeklyDigestScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1586,6 +1768,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1603,20 +1799,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -1740,6 +1922,8 @@ export type GlobalOmitConfig = {
   schedulingPage?: Prisma.SchedulingPageOmit
   booking?: Prisma.BookingOmit
   notification?: Prisma.NotificationOmit
+  timeEntry?: Prisma.TimeEntryOmit
+  weeklyDigest?: Prisma.WeeklyDigestOmit
 }
 
 /* Types for Logging */

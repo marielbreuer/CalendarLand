@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useUpdateTask } from "@/hooks/useTasks";
 import { useUIStore } from "@/stores/uiStore";
 import { format } from "date-fns";
+import { TimerButton } from "@/components/time-tracking/TimerButton";
+import { ConfettiBurst } from "@/components/gamification/ConfettiBurst";
 import type { Task, TaskPriority } from "@/types/task";
 
 interface TaskItemProps {
@@ -17,25 +21,43 @@ const priorityConfig: Record<TaskPriority, { label: string; color: string; bg: s
   low: { label: "Low", color: "text-gray-500", bg: "bg-gray-100" },
 };
 
+const difficultyConfig: Record<string, { label: string; color: string }> = {
+  easy: { label: "Easy", color: "#22c55e" },
+  medium: { label: "Medium", color: "#f59e0b" },
+  hard: { label: "Hard", color: "#ef4444" },
+};
+
 export function TaskItem({ task, calendarColor = "#3b82f6" }: TaskItemProps) {
   const updateTask = useUpdateTask();
   const openEditTaskModal = useUIStore((s) => s.openEditTaskModal);
+  const queryClient = useQueryClient();
+  const [showConfetti, setShowConfetti] = useState(false);
 
   function handleToggleDone() {
-    updateTask.mutate({
-      id: task.id,
-      data: { status: task.status === "done" ? "todo" : "done" },
-    });
+    const newStatus = task.status === "done" ? "todo" : "done";
+    updateTask.mutate(
+      { id: task.id, data: { status: newStatus } },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["users", "me"] });
+          if (newStatus === "done" && task.difficulty === "hard") {
+            setShowConfetti(true);
+          }
+        },
+      }
+    );
   }
 
   const pConfig = priorityConfig[task.priority];
+  const dConfig = task.difficulty ? difficultyConfig[task.difficulty] : null;
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && task.status !== "done";
 
   return (
     <div
-      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors group cursor-pointer"
+      className="relative flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors group cursor-pointer"
       onClick={() => openEditTaskModal(task.id)}
     >
+      <ConfettiBurst active={showConfetti} onDone={() => setShowConfetti(false)} />
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -86,9 +108,25 @@ export function TaskItem({ task, calendarColor = "#3b82f6" }: TaskItemProps) {
         </div>
       </div>
 
-      <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium flex-shrink-0 ${pConfig.color} ${pConfig.bg}`}>
-        {pConfig.label}
-      </span>
+      <div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+        <TimerButton
+          entityType="task"
+          entityId={task.id}
+          entityTitle={task.title}
+          calendarId={task.calendarId}
+        />
+        {dConfig && (
+          <span
+            className="text-[10px] px-1.5 py-0.5 rounded font-medium text-white"
+            style={{ backgroundColor: dConfig.color }}
+          >
+            {dConfig.label}
+          </span>
+        )}
+        <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${pConfig.color} ${pConfig.bg}`}>
+          {pConfig.label}
+        </span>
+      </div>
     </div>
   );
 }

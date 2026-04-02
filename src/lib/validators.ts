@@ -99,6 +99,7 @@ export const batchUpdateNotificationsSchema = z.object({
 
 const taskStatusEnum = z.enum(["todo", "doing", "done"]);
 const taskPriorityEnum = z.enum(["low", "normal", "high", "urgent"]);
+const taskDifficultyEnum = z.enum(["easy", "medium", "hard"]);
 
 export const createTaskSchema = z.object({
   title: z.string().min(1, "Title is required").max(200),
@@ -106,6 +107,7 @@ export const createTaskSchema = z.object({
   dueDate: z.string().datetime().optional(),
   status: taskStatusEnum.default("todo"),
   priority: taskPriorityEnum.default("normal"),
+  difficulty: taskDifficultyEnum.optional(),
   sortOrder: z.number().optional(),
   tags: z.array(z.string().max(50)).max(20).optional(),
   calendarId: z.string().min(1),
@@ -117,6 +119,7 @@ export const updateTaskSchema = z.object({
   dueDate: z.string().datetime().nullable().optional(),
   status: taskStatusEnum.optional(),
   priority: taskPriorityEnum.optional(),
+  difficulty: taskDifficultyEnum.nullable().optional(),
   sortOrder: z.number().optional(),
   tags: z.array(z.string().max(50)).max(20).optional(),
   calendarId: z.string().optional(),
@@ -185,6 +188,7 @@ export const searchQuerySchema = z.object({
 export const updateSettingsSchema = z.object({
   bufferMinutes: z.number().int().min(0).max(120).optional(),
   secondaryTimezone: z.string().nullable().optional(),
+  autoStopTimer: z.boolean().optional(),
 });
 
 // Scheduling page schemas
@@ -222,6 +226,39 @@ export const bookingInputSchema = z.object({
   calendarId: z.string().optional(),
 });
 
+// TimeEntry schemas
+export const createTimeEntrySchema = z.object({
+  description: z.string().max(500).optional(),
+  eventId: z.string().optional(),
+  taskId: z.string().optional(),
+  calendarId: z.string().min(1),
+  startedAt: z.string().datetime(),
+  endedAt: z.string().datetime().optional(),
+  isBillable: z.boolean().default(false),
+});
+
+export const updateTimeEntrySchema = z.object({
+  description: z.string().max(500).nullable().optional(),
+  endedAt: z.string().datetime().optional(),
+  duration: z.number().int().min(0).optional(),
+  isBillable: z.boolean().optional(),
+  calendarId: z.string().optional(),
+});
+
+export const stopTimerSchema = z.object({
+  entryId: z.string().min(1),
+  endedAt: z.string().datetime(),
+});
+
+// Analytics query schema
+export const analyticsQuerySchema = z.object({
+  range: z
+    .enum(["this_week", "last_week", "this_month", "last_month", "custom"])
+    .default("this_week"),
+  start: z.string().datetime().optional(),
+  end: z.string().datetime().optional(),
+});
+
 export type CreateCalendarInput = z.infer<typeof createCalendarSchema>;
 export type UpdateCalendarInput = z.infer<typeof updateCalendarSchema>;
 export type CreateEventInput = z.infer<typeof createEventSchema>;
@@ -233,3 +270,7 @@ export type UpdateSettingsInput = z.infer<typeof updateSettingsSchema>;
 export type CreateSchedulingPageInput = z.infer<typeof createSchedulingPageSchema>;
 export type UpdateSchedulingPageInputValidated = z.infer<typeof updateSchedulingPageSchema>;
 export type BookingInputValidated = z.infer<typeof bookingInputSchema>;
+export type CreateTimeEntryInput = z.infer<typeof createTimeEntrySchema>;
+export type UpdateTimeEntryInput = z.infer<typeof updateTimeEntrySchema>;
+export type StopTimerInput = z.infer<typeof stopTimerSchema>;
+export type AnalyticsQueryInput = z.infer<typeof analyticsQuerySchema>;

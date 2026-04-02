@@ -7,8 +7,11 @@ import { CalendarHeader } from "@/components/calendar/CalendarHeader";
 import { SearchModal } from "@/components/search/SearchModal";
 import { QuickCaptureModal } from "@/components/capture/QuickCaptureModal";
 import { TaskModal } from "@/components/tasks/TaskModal";
+import { TimeEntryModal } from "@/components/time-tracking/TimeEntryModal";
 import { NotificationPanel } from "@/components/notifications/NotificationPanel";
 import { NotificationChecker } from "@/components/notifications/NotificationChecker";
+import { MobileLayout } from "@/components/mobile/MobileLayout";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { useCalendarViewStore } from "@/stores/calendarViewStore";
 import { useUIStore } from "@/stores/uiStore";
 
@@ -17,6 +20,7 @@ export default function CalendarLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const isMobile = useIsMobile();
   const { goForward, goBackward, goToToday, setView } = useCalendarViewStore();
   const sidebarOpen = useUIStore((s) => s.sidebarOpen);
   const setSidebarOpen = useUIStore((s) => s.setSidebarOpen);
@@ -78,6 +82,9 @@ export default function CalendarLayout({
         case "s":
           if (!e.metaKey && !e.ctrlKey) router.push("/calendar/scheduling");
           break;
+        case "a":
+          if (!e.metaKey && !e.ctrlKey) router.push("/calendar/analytics");
+          break;
         case ",":
           if (!e.metaKey && !e.ctrlKey) router.push("/calendar/settings");
           break;
@@ -106,6 +113,26 @@ export default function CalendarLayout({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const modals = (
+    <>
+      <NotificationPanel />
+      <NotificationChecker />
+      <SearchModal />
+      <QuickCaptureModal />
+      <TaskModal />
+      <TimeEntryModal />
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        <MobileLayout>{children}</MobileLayout>
+        {modals}
+      </>
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <CalendarHeader />
@@ -131,11 +158,7 @@ export default function CalendarLayout({
 
         <main className="flex-1 overflow-auto">{children}</main>
       </div>
-      <NotificationPanel />
-      <NotificationChecker />
-      <SearchModal />
-      <QuickCaptureModal />
-      <TaskModal />
+      {modals}
     </div>
   );
 }

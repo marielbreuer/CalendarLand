@@ -189,9 +189,15 @@ interface InviteRow { id: string; token: string; email: string | null; expiresAt
 
 function AdminUsersSection() {
   const qc = useQueryClient();
+  const { data: session } = useSession();
+  const currentUserId = session?.user?.id as string | undefined;
+
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteExpiry, setInviteExpiry] = useState(7);
-  const [generatedLink, setGeneratedLink] = useState<string | null>(null);
+  const [generatedInvite, setGeneratedInvite] = useState<{ id: string; link: string } | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [resetPwdId, setResetPwdId] = useState<string | null>(null);
+  const [resetPwdValue, setResetPwdValue] = useState("");
 
   const { data: usersData } = useQuery<{ users: UserRow[] }>({
     queryKey: ["admin-users"],
@@ -211,7 +217,7 @@ function AdminUsersSection() {
         body: JSON.stringify({ email: inviteEmail || null, expiresInDays: inviteExpiry }),
       }).then((r) => r.json()),
     onSuccess: (data) => {
-      setGeneratedLink(data.link);
+      setGeneratedInvite({ id: data.invite.id, link: data.link });
       setInviteEmail("");
       qc.invalidateQueries({ queryKey: ["admin-invites"] });
     },
@@ -221,11 +227,39 @@ function AdminUsersSection() {
   const revokeInvite = useMutation({
     mutationFn: (inviteId: string) =>
       fetch(`/api/invites/${inviteId}`, { method: "DELETE" }),
-    onSuccess: () => {
+    onSuccess: (_data, inviteId) => {
+      if (generatedInvite?.id === inviteId) setGeneratedInvite(null);
       qc.invalidateQueries({ queryKey: ["admin-invites"] });
       toast.success("Invite revoked");
     },
     onError: () => toast.error("Failed to revoke invite"),
+  });
+
+  const deleteUser = useMutation({
+    mutationFn: (userId: string) =>
+      fetch(`/api/users/${userId}`, { method: "DELETE" }).then((r) => r.json()),
+    onSuccess: () => {
+      setConfirmDeleteId(null);
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+      toast.success("User deleted");
+    },
+    onError: () => toast.error("Failed to delete user"),
+  });
+
+  const resetPassword = useMutation({
+    mutationFn: ({ userId, password }: { userId: string; password: string }) =>
+      fetch(`/api/users/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      }).then((r) => r.json()),
+    onSuccess: (data) => {
+      if (data.error) { toast.error(data.error); return; }
+      setResetPwdId(null);
+      setResetPwdValue("");
+      toast.success("Password updated");
+    },
+    onError: () => toast.error("Failed to reset password"),
   });
 
   const pendingInvites = (invitesData?.invites ?? []).filter((inv) => !inv.usedAt && new Date(inv.expiresAt) > new Date());
@@ -242,17 +276,92 @@ function AdminUsersSection() {
       {/* User list */}
       <div className="space-y-2">
         {(usersData?.users ?? []).map((u) => (
-          <div key={u.id} className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)]">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">{u.name}</span>
-                {u.role === "admin" && (
-                  <span className="text-[10px] px-1 py-0.5 rounded font-medium" style={{ background: "var(--pink, #ec4899)", color: "#fff" }}>admin</span>
+          <div key={u.id} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] overflow-hidden">
+            {/* User row */}
+            <div className="flex items-center justify-between p-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">{u.name}</span>
+                  {u.role === "admin" && (
+                    <span className="text-[10px] px-1 py-0.5 rounded font-medium" style={{ background: "var(--pink, #ec4899)", color: "#fff" }}>admin</span>
+                  )}
+                </div>
+                <span className="text-xs text-[var(--text-secondary)]">{u.email} · {u.calendarCount} calendar{u.calendarCount !== 1 ? "s" : ""}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-[var(--text-secondary)]">{new Date(u.createdAt).toLocaleDateString()}</span>
+                {/* Reset password button */}
+                <button
+                  onClick={() => {
+                    setResetPwdId(resetPwdId === u.id ? null : u.id);
+                    setResetPwdValue("");
+                    setConfirmDeleteId(null);
+                  }}
+                  className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                >
+                  Reset pwd
+                </button>
+                {/* Delete button */}
+                {u.id !== currentUserId && (
+                  confirmDeleteId === u.id ? (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs text-red-500">Delete?</span>
+                      <button
+                        onClick={() => deleteUser.mutate(u.id)}
+                        disabled={deleteUser.isPending}
+                        className="text-xs px-2 py-0.5 rounded bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 transition-colors"
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        onClick={() => setConfirmDeleteId(null)}
+                        className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => { setConfirmDeleteId(u.id); setResetPwdId(null); }}
+                      className="text-xs text-red-400 hover:text-red-600 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  )
                 )}
               </div>
-              <span className="text-xs text-[var(--text-secondary)]">{u.email} · {u.calendarCount} calendar{u.calendarCount !== 1 ? "s" : ""}</span>
             </div>
-            <span className="text-xs text-[var(--text-secondary)]">{new Date(u.createdAt).toLocaleDateString()}</span>
+
+            {/* Inline reset password panel */}
+            {resetPwdId === u.id && (
+              <div className="px-3 pb-3 pt-2 border-t border-[var(--border-primary)] space-y-2">
+                <label className="text-xs text-[var(--text-secondary)]">New password for {u.email}:</label>
+                <div className="flex gap-2">
+                  <input
+                    type="password"
+                    value={resetPwdValue}
+                    onChange={(e) => setResetPwdValue(e.target.value)}
+                    placeholder="Min. 6 characters"
+                    autoFocus
+                    className="flex-1 px-3 py-1.5 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent-ring)]"
+                  />
+                  <button
+                    onClick={() => resetPassword.mutate({ userId: u.id, password: resetPwdValue })}
+                    disabled={resetPwdValue.length < 6 || resetPassword.isPending}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-50 transition-opacity"
+                    style={{ background: "var(--pink, #ec4899)", color: "#fff" }}
+                  >
+                    {resetPassword.isPending ? "Saving…" : "Save"}
+                  </button>
+                  <button
+                    onClick={() => { setResetPwdId(null); setResetPwdValue(""); }}
+                    className="px-3 py-1.5 rounded-lg text-xs border border-[var(--border-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -262,19 +371,39 @@ function AdminUsersSection() {
         <div className="space-y-2">
           <h3 className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wide">Pending Invites</h3>
           {pendingInvites.map((inv) => (
-            <div key={inv.id} className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)]">
-              <div>
-                <span className="text-sm">{inv.email ?? "Open invite"}</span>
-                <div className="text-xs text-[var(--text-secondary)]">
-                  Expires {new Date(inv.expiresAt).toLocaleDateString()}
+            <div key={inv.id} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] overflow-hidden">
+              <div className="flex items-center justify-between p-3">
+                <div>
+                  <span className="text-sm">{inv.email ?? "Open invite"}</span>
+                  <div className="text-xs text-[var(--text-secondary)]">
+                    Expires {new Date(inv.expiresAt).toLocaleDateString()}
+                  </div>
                 </div>
+                <button
+                  onClick={() => revokeInvite.mutate(inv.id)}
+                  className="text-xs text-red-500 hover:text-red-700 transition-colors"
+                >
+                  Revoke
+                </button>
               </div>
-              <button
-                onClick={() => revokeInvite.mutate(inv.id)}
-                className="text-xs text-red-500 hover:text-red-700 transition-colors"
-              >
-                Revoke
-              </button>
+              {generatedInvite?.id === inv.id && (
+                <div className="px-3 pb-3 space-y-1 border-t border-[var(--border-primary)] pt-2">
+                  <label className="text-xs text-[var(--text-secondary)]">Invite link — copy and share:</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      readOnly
+                      value={generatedInvite.link}
+                      className="flex-1 px-2 py-1.5 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] text-xs font-mono"
+                    />
+                    <button
+                      onClick={() => { navigator.clipboard.writeText(generatedInvite.link); toast.success("Copied!"); }}
+                      className="px-2 py-1.5 rounded-lg border border-[var(--border-primary)] text-xs hover:bg-[var(--bg-tertiary)] transition-colors"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -307,27 +436,9 @@ function AdminUsersSection() {
             className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-50"
             style={{ background: "var(--pink, #ec4899)", color: "#fff" }}
           >
-            Generate
+            {createInvite.isPending ? "Generating…" : "Generate"}
           </button>
         </div>
-        {generatedLink && (
-          <div className="space-y-1">
-            <label className="text-xs text-[var(--text-secondary)]">Invite link (copy and share):</label>
-            <div className="flex items-center gap-2">
-              <input
-                readOnly
-                value={generatedLink}
-                className="flex-1 px-2 py-1.5 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] text-xs font-mono"
-              />
-              <button
-                onClick={() => { navigator.clipboard.writeText(generatedLink); toast.success("Copied!"); }}
-                className="px-2 py-1.5 rounded-lg border border-[var(--border-primary)] text-xs hover:bg-[var(--bg-tertiary)] transition-colors"
-              >
-                Copy
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
@@ -343,11 +454,13 @@ export default function SettingsPage() {
   const [bufferMinutes, setBufferMinutes] = useState(0);
   const [secondaryTimezone, setSecondaryTimezone] = useState<string>("");
   const [tzSearch, setTzSearch] = useState("");
+  const [autoStopTimer, setAutoStopTimer] = useState(true);
 
   useEffect(() => {
     if (settings) {
       setBufferMinutes(settings.bufferMinutes);
       setSecondaryTimezone(settings.secondaryTimezone ?? "");
+      setAutoStopTimer(settings.autoStopTimer ?? true);
     }
   }, [settings]);
 
@@ -356,6 +469,7 @@ export default function SettingsPage() {
       {
         bufferMinutes,
         secondaryTimezone: secondaryTimezone || null,
+        autoStopTimer,
       },
       {
         onSuccess: () => toast.success("Settings saved"),
@@ -479,6 +593,33 @@ export default function SettingsPage() {
             )}
           </div>
         )}
+      </section>
+
+      {/* Time Tracking */}
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-sm font-semibold">Time Tracking</h2>
+          <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+            Configure timer behaviour.
+          </p>
+        </div>
+        <label className="flex items-center gap-3 cursor-pointer select-none">
+          <button
+            role="switch"
+            aria-checked={autoStopTimer}
+            onClick={() => setAutoStopTimer((v) => !v)}
+            className={`relative w-9 h-5 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] ${
+              autoStopTimer ? "bg-[var(--accent,#ec4899)]" : "bg-[var(--border-primary)]"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
+                autoStopTimer ? "translate-x-4" : "translate-x-0"
+              }`}
+            />
+          </button>
+          <span className="text-sm">Auto-stop timer when linked event ends</span>
+        </label>
       </section>
 
       {/* Scheduling Links */}

@@ -6,6 +6,7 @@ import { useDeleteEvent } from "@/hooks/useEvents";
 import { useSettings } from "@/hooks/useSettings";
 import { RecurrenceScopeDialog } from "./RecurrenceScopeDialog";
 import { Button } from "@/components/ui/Button";
+import { TimerButton } from "@/components/time-tracking/TimerButton";
 import { format } from "@/lib/dates";
 import { getEventBgColor } from "@/lib/colors";
 import { toast } from "sonner";
@@ -218,6 +219,15 @@ export function EventDetailPopover({ calendarColors }: EventDetailPopoverProps) 
               Recurring
             </span>
           )}
+
+          {/* Timer */}
+          <TimerButton
+            entityType="event"
+            entityId={event.id}
+            entityTitle={event.title}
+            calendarId={event.calendarId}
+            eventEndTime={new Date(event.endTime)}
+          />
 
           {/* Actions */}
           <div className="flex items-center gap-2 pt-1 border-t border-[var(--border-primary)]">

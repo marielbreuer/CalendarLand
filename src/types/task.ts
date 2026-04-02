@@ -1,5 +1,6 @@
 export type TaskStatus = "todo" | "doing" | "done";
 export type TaskPriority = "low" | "normal" | "high" | "urgent";
+export type TaskDifficulty = "easy" | "medium" | "hard";
 
 export interface Task {
   id: string;
@@ -8,6 +9,7 @@ export interface Task {
   dueDate: string | null;
   status: TaskStatus;
   priority: TaskPriority;
+  difficulty: TaskDifficulty | null;
   sortOrder: number;
   tags: string[];
   calendarId: string;
@@ -21,6 +23,7 @@ export interface CreateTaskInput {
   dueDate?: string;
   status?: TaskStatus;
   priority?: TaskPriority;
+  difficulty?: TaskDifficulty;
   sortOrder?: number;
   tags?: string[];
   calendarId: string;
@@ -32,6 +35,7 @@ export interface UpdateTaskInput {
   dueDate?: string | null;
   status?: TaskStatus;
   priority?: TaskPriority;
+  difficulty?: TaskDifficulty | null;
   sortOrder?: number;
   tags?: string[];
   calendarId?: string;

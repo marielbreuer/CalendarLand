@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String
-  passwordHash String
-  role         String   @default("user") // "admin" | "user"
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String
+  passwordHash   String
+  role           String   @default("user") // "admin" | "user"
+  lifetimePoints Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   calendars       Calendar[]
   tags            Tag[]
@@ -23,6 +24,8 @@ model User {
   schedulingPages SchedulingPage[]
   notifications   Notification[]
   invites         Invite[]
+  timeEntries     TimeEntry[]
+  weeklyDigests   WeeklyDigest[]
 
   @@index([email])
   @@map("users")
@@ -66,6 +69,7 @@ model Calendar {
   tasks           Task[]
   templates       EventTemplate[]
   schedulingPages SchedulingPage[]
+  timeEntries     TimeEntry[]
 
   @@index([userId])
   @@map("calendars")
@@ -78,6 +82,7 @@ model Task {
   dueDate     DateTime?
   status      String    @default("todo") // todo, doing, done
   priority    String    @default("normal") // low, normal, high, urgent
+  difficulty  String?                      // easy, medium, hard
   sortOrder   Float     @default(0)
   tags        String?   @db.Text // JSON string array
 
@@ -88,6 +93,7 @@ model Task {
   updatedAt DateTime @updatedAt
 
   notifications Notification[]
+  timeEntries   TimeEntry[]
 
   @@index([calendarId])
   @@index([status])
@@ -125,6 +131,7 @@ model Event {
 
   participants  Participant[]
   notifications Notification[]
+  timeEntries   TimeEntry[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -193,6 +200,7 @@ model UserSettings {
   id                String   @id @default(cuid())
   bufferMinutes     Int      @default(0)
   secondaryTimezone String?
+  autoStopTimer     Boolean  @default(true)
   updatedAt         DateTime @updatedAt
 
   userId String @unique
@@ -273,4 +281,48 @@ model Notification {
   @@index([eventId])
   @@index([taskId])
   @@map("notifications")
+}
+
+model TimeEntry {
+  id          String    @id @default(cuid())
+  description String?   @db.Text
+
+  eventId  String?
+  event    Event?    @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  taskId   String?
+  task     Task?     @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  calendarId String
+  calendar   Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  startedAt  DateTime
+  endedAt    DateTime?
+  duration   Int?     // computed minutes; null = timer still running
+  isBillable Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([calendarId])
+  @@index([eventId])
+  @@index([taskId])
+  @@index([startedAt])
+  @@map("time_entries")
+}
+
+model WeeklyDigest {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weekStart   DateTime // Monday 00:00 UTC of the week being summarized
+  data        String   @db.Text // JSON blob
+  generatedAt DateTime @default(now())
+
+  @@unique([userId, weekStart])
+  @@index([userId])
+  @@map("weekly_digests")
 }

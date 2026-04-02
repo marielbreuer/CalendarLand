@@ -25,6 +25,11 @@ interface UIState {
   quickCaptureOpen: boolean;
   // Notification panel
   notificationPanelOpen: boolean;
+  // Time entry modal
+  timeEntryModalOpen: boolean;
+  timeEntryModalMode: "create" | "edit";
+  selectedTimeEntryId: string | null;
+  timeEntryPrefill: { eventId?: string; taskId?: string; calendarId?: string } | null;
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
   openCreateEventModal: (prefill?: Partial<CreateEventInput>) => void;
@@ -49,6 +54,9 @@ interface UIState {
   toggleNotificationPanel: () => void;
   openNotificationPanel: () => void;
   closeNotificationPanel: () => void;
+  openCreateTimeEntryModal: (prefill?: { eventId?: string; taskId?: string; calendarId?: string }) => void;
+  openEditTimeEntryModal: (id: string) => void;
+  closeTimeEntryModal: () => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -69,6 +77,10 @@ export const useUIStore = create<UIState>((set) => ({
   searchModalOpen: false,
   quickCaptureOpen: false,
   notificationPanelOpen: false,
+  timeEntryModalOpen: false,
+  timeEntryModalMode: "create",
+  selectedTimeEntryId: null,
+  timeEntryPrefill: null,
   toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
   openCreateEventModal: (prefill) =>
@@ -123,4 +135,10 @@ export const useUIStore = create<UIState>((set) => ({
   toggleNotificationPanel: () => set((s) => ({ notificationPanelOpen: !s.notificationPanelOpen })),
   openNotificationPanel: () => set({ notificationPanelOpen: true }),
   closeNotificationPanel: () => set({ notificationPanelOpen: false }),
+  openCreateTimeEntryModal: (prefill) =>
+    set({ timeEntryModalOpen: true, timeEntryModalMode: "create", selectedTimeEntryId: null, timeEntryPrefill: prefill ?? null }),
+  openEditTimeEntryModal: (id) =>
+    set({ timeEntryModalOpen: true, timeEntryModalMode: "edit", selectedTimeEntryId: id, timeEntryPrefill: null }),
+  closeTimeEntryModal: () =>
+    set({ timeEntryModalOpen: false, selectedTimeEntryId: null, timeEntryPrefill: null }),
 }));

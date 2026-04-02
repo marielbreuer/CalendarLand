@@ -77,3 +77,13 @@ export type Booking = Prisma.BookingModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model TimeEntry
+ * 
+ */
+export type TimeEntry = Prisma.TimeEntryModel
+/**
+ * Model WeeklyDigest
+ * 
+ */
+export type WeeklyDigest = Prisma.WeeklyDigestModel

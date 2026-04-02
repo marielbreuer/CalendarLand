@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { bookingInputSchema } from "@/lib/validators";
 import { getAvailableSlots } from "@/lib/availability";
 import type { SchedulingConfig } from "@/lib/availability";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { auditLog } from "@/lib/audit";
 
 interface Params {
   params: Promise<{ slug: string }>;
@@ -138,6 +140,16 @@ export async function GET(request: NextRequest, { params }: Params) {
 }
 
 export async function POST(request: NextRequest, { params }: Params) {
+  // Rate limit: 10 bookings per IP per hour
+  const ip = getClientIp(request);
+  const rl = rateLimit(`book:${ip}`, 10, 60 * 60 * 1000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { message: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const { slug } = await params;
   const body = await request.json();
   const parsed = bookingInputSchema.safeParse(body);
@@ -208,6 +220,11 @@ export async function POST(request: NextRequest, { params }: Params) {
       endTime,
       duration,
     },
+  });
+
+  await auditLog("booking_created", {
+    details: { bookingId: booking.id, guestEmail, slug },
+    ipAddress: ip,
   });
 
   return NextResponse.json({ booking, event }, { status: 201 });

@@ -1,8 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { validatePassword } from "@/lib/password";
+import { auditLog } from "@/lib/audit";
 
 export async function POST(request: Request) {
+  // Rate limit: 5 registrations per IP per hour
+  const ip = getClientIp(request);
+  const rl = rateLimit(`register:${ip}`, 5, 60 * 60 * 1000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { message: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const body = await request.json();
   const { token, name, email, password } = body;
 
@@ -10,8 +23,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "All fields are required" }, { status: 400 });
   }
 
-  if (password.length < 8) {
-    return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
+  const pwError = validatePassword(password);
+  if (pwError) {
+    return NextResponse.json({ message: pwError }, { status: 400 });
   }
 
   // Validate invite
@@ -69,6 +83,13 @@ export async function POST(request: Request) {
     });
 
     return newUser;
+  });
+
+  await auditLog("register", { userId: user.id, ipAddress: ip });
+  await auditLog("invite_used", {
+    userId: user.id,
+    details: { inviteId: invite.id, inviteCreatedBy: invite.createdBy },
+    ipAddress: ip,
   });
 
   return NextResponse.json(

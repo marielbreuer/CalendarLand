@@ -249,6 +249,7 @@ export type UserWhereInput = {
   invites?: Prisma.InviteListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
   weeklyDigests?: Prisma.WeeklyDigestListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -269,6 +270,7 @@ export type UserOrderByWithRelationInput = {
   invites?: Prisma.InviteOrderByRelationAggregateInput
   timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
   weeklyDigests?: Prisma.WeeklyDigestOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -292,6 +294,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   invites?: Prisma.InviteListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
   weeklyDigests?: Prisma.WeeklyDigestListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -342,6 +345,7 @@ export type UserCreateInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -362,6 +366,7 @@ export type UserUncheckedCreateInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -382,6 +387,7 @@ export type UserUpdateInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -402,6 +408,7 @@ export type UserUncheckedUpdateInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -481,6 +488,11 @@ export type UserSumOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -625,6 +637,22 @@ export type UserUpdateOneRequiredWithoutWeeklyDigestsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWeeklyDigestsInput, Prisma.UserUpdateWithoutWeeklyDigestsInput>, Prisma.UserUncheckedUpdateWithoutWeeklyDigestsInput>
 }
 
+export type UserCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.UserUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UserUpdateWithoutAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
 export type UserCreateWithoutInvitesInput = {
   id?: string
   email: string
@@ -642,6 +670,7 @@ export type UserCreateWithoutInvitesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvitesInput = {
@@ -661,6 +690,7 @@ export type UserUncheckedCreateWithoutInvitesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvitesInput = {
@@ -696,6 +726,7 @@ export type UserUpdateWithoutInvitesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvitesInput = {
@@ -715,6 +746,7 @@ export type UserUncheckedUpdateWithoutInvitesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCalendarsInput = {
@@ -734,6 +766,7 @@ export type UserCreateWithoutCalendarsInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCalendarsInput = {
@@ -753,6 +786,7 @@ export type UserUncheckedCreateWithoutCalendarsInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCalendarsInput = {
@@ -788,6 +822,7 @@ export type UserUpdateWithoutCalendarsInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCalendarsInput = {
@@ -807,6 +842,7 @@ export type UserUncheckedUpdateWithoutCalendarsInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTagsInput = {
@@ -826,6 +862,7 @@ export type UserCreateWithoutTagsInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTagsInput = {
@@ -845,6 +882,7 @@ export type UserUncheckedCreateWithoutTagsInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTagsInput = {
@@ -880,6 +918,7 @@ export type UserUpdateWithoutTagsInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTagsInput = {
@@ -899,6 +938,7 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTemplatesInput = {
@@ -918,6 +958,7 @@ export type UserCreateWithoutTemplatesInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTemplatesInput = {
@@ -937,6 +978,7 @@ export type UserUncheckedCreateWithoutTemplatesInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTemplatesInput = {
@@ -972,6 +1014,7 @@ export type UserUpdateWithoutTemplatesInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTemplatesInput = {
@@ -991,6 +1034,7 @@ export type UserUncheckedUpdateWithoutTemplatesInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserSettingsInput = {
@@ -1010,6 +1054,7 @@ export type UserCreateWithoutUserSettingsInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserSettingsInput = {
@@ -1029,6 +1074,7 @@ export type UserUncheckedCreateWithoutUserSettingsInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserSettingsInput = {
@@ -1064,6 +1110,7 @@ export type UserUpdateWithoutUserSettingsInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserSettingsInput = {
@@ -1083,6 +1130,7 @@ export type UserUncheckedUpdateWithoutUserSettingsInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSchedulingPagesInput = {
@@ -1102,6 +1150,7 @@ export type UserCreateWithoutSchedulingPagesInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSchedulingPagesInput = {
@@ -1121,6 +1170,7 @@ export type UserUncheckedCreateWithoutSchedulingPagesInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSchedulingPagesInput = {
@@ -1156,6 +1206,7 @@ export type UserUpdateWithoutSchedulingPagesInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSchedulingPagesInput = {
@@ -1175,6 +1226,7 @@ export type UserUncheckedUpdateWithoutSchedulingPagesInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1194,6 +1246,7 @@ export type UserCreateWithoutNotificationsInput = {
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1213,6 +1266,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1248,6 +1302,7 @@ export type UserUpdateWithoutNotificationsInput = {
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1267,6 +1322,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTimeEntriesInput = {
@@ -1286,6 +1342,7 @@ export type UserCreateWithoutTimeEntriesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimeEntriesInput = {
@@ -1305,6 +1362,7 @@ export type UserUncheckedCreateWithoutTimeEntriesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimeEntriesInput = {
@@ -1340,6 +1398,7 @@ export type UserUpdateWithoutTimeEntriesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimeEntriesInput = {
@@ -1359,6 +1418,7 @@ export type UserUncheckedUpdateWithoutTimeEntriesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWeeklyDigestsInput = {
@@ -1378,6 +1438,7 @@ export type UserCreateWithoutWeeklyDigestsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWeeklyDigestsInput = {
@@ -1397,6 +1458,7 @@ export type UserUncheckedCreateWithoutWeeklyDigestsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWeeklyDigestsInput = {
@@ -1432,6 +1494,7 @@ export type UserUpdateWithoutWeeklyDigestsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWeeklyDigestsInput = {
@@ -1451,6 +1514,103 @@ export type UserUncheckedUpdateWithoutWeeklyDigestsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash: string
+  role?: string
+  lifetimePoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  calendars?: Prisma.CalendarUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
+  templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  invites?: Prisma.InviteUncheckedCreateNestedManyWithoutCreatorInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutUserInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UserUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  lifetimePoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calendars?: Prisma.CalendarUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
+  templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  invites?: Prisma.InviteUncheckedUpdateManyWithoutCreatorNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutUserNestedInput
+  weeklyDigests?: Prisma.WeeklyDigestUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1467,6 +1627,7 @@ export type UserCountOutputType = {
   invites: number
   timeEntries: number
   weeklyDigests: number
+  auditLogs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1478,6 +1639,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   invites?: boolean | UserCountOutputTypeCountInvitesArgs
   timeEntries?: boolean | UserCountOutputTypeCountTimeEntriesArgs
   weeklyDigests?: boolean | UserCountOutputTypeCountWeeklyDigestsArgs
+  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
 }
 
 /**
@@ -1546,6 +1708,13 @@ export type UserCountOutputTypeCountWeeklyDigestsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.WeeklyDigestWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1565,6 +1734,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   invites?: boolean | Prisma.User$invitesArgs<ExtArgs>
   timeEntries?: boolean | Prisma.User$timeEntriesArgs<ExtArgs>
   weeklyDigests?: boolean | Prisma.User$weeklyDigestsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1612,6 +1782,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   invites?: boolean | Prisma.User$invitesArgs<ExtArgs>
   timeEntries?: boolean | Prisma.User$timeEntriesArgs<ExtArgs>
   weeklyDigests?: boolean | Prisma.User$weeklyDigestsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1629,6 +1800,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     invites: Prisma.$InvitePayload<ExtArgs>[]
     timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     weeklyDigests: Prisma.$WeeklyDigestPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2042,6 +2214,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   invites<T extends Prisma.User$invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timeEntries<T extends Prisma.User$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   weeklyDigests<T extends Prisma.User$weeklyDigestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$weeklyDigestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeeklyDigestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2675,6 +2848,30 @@ export type User$weeklyDigestsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.WeeklyDigestScalarFieldEnum | Prisma.WeeklyDigestScalarFieldEnum[]
+}
+
+/**
+ * User.auditLogs
+ */
+export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
 }
 
 /**

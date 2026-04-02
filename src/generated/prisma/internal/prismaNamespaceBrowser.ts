@@ -64,7 +64,8 @@ export const ModelName = {
   Booking: 'Booking',
   Notification: 'Notification',
   TimeEntry: 'TimeEntry',
-  WeeklyDigest: 'WeeklyDigest'
+  WeeklyDigest: 'WeeklyDigest',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -312,6 +313,18 @@ export const WeeklyDigestScalarFieldEnum = {
 } as const
 
 export type WeeklyDigestScalarFieldEnum = (typeof WeeklyDigestScalarFieldEnum)[keyof typeof WeeklyDigestScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  details: 'details',
+  ipAddress: 'ipAddress',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
 export const SortOrder = {

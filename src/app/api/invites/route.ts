@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth, requireAdmin } from "@/lib/auth-guard";
 import { addDays } from "date-fns";
+import { auditLog } from "@/lib/audit";
+import { getClientIp } from "@/lib/rate-limit";
 
 export async function GET() {
   const authResult = await requireAuth();
@@ -35,6 +37,12 @@ export async function POST(request: Request) {
       createdBy: userId,
       expiresAt: addDays(new Date(), expiresInDays),
     },
+  });
+
+  await auditLog("invite_created", {
+    userId,
+    details: { inviteId: invite.id, email, expiresInDays },
+    ipAddress: getClientIp(request),
   });
 
   const baseUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";

@@ -26,6 +26,7 @@ model User {
   invites         Invite[]
   timeEntries     TimeEntry[]
   weeklyDigests   WeeklyDigest[]
+  auditLogs       AuditLog[]
 
   @@index([email])
   @@map("users")
@@ -137,6 +138,7 @@ model Event {
   updatedAt DateTime @updatedAt
 
   @@index([calendarId])
+  @@index([calendarId, startTime]) // range queries within a calendar
   @@index([startTime, endTime])
   @@index([seriesId])
   @@index([isRecurring])
@@ -278,6 +280,7 @@ model Notification {
 
   @@index([userId])
   @@index([fired, fireAt])
+  @@index([userId, fired, fireAt]) // polling query: due notifications per user
   @@index([eventId])
   @@index([taskId])
   @@map("notifications")
@@ -325,4 +328,19 @@ model WeeklyDigest {
   @@unique([userId, weekStart])
   @@index([userId])
   @@map("weekly_digests")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String   // login | login_failed | register | invite_used | invite_created | user_deleted | booking_created
+  details   String?  @db.Text // JSON
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
 }

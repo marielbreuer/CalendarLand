@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth, requireAdmin } from "@/lib/auth-guard";
 import bcrypt from "bcryptjs";
+import { auditLog } from "@/lib/audit";
+import { getClientIp } from "@/lib/rate-limit";
+import { validatePassword } from "@/lib/password";
 
 export async function PATCH(
   request: Request,
@@ -16,11 +19,9 @@ export async function PATCH(
   const body = await request.json();
   const newPassword: string = body.password?.trim();
 
-  if (!newPassword || newPassword.length < 6) {
-    return NextResponse.json(
-      { error: "Password must be at least 6 characters" },
-      { status: 400 }
-    );
+  const pwError = validatePassword(newPassword ?? "");
+  if (pwError) {
+    return NextResponse.json({ error: pwError }, { status: 400 });
   }
 
   const target = await prisma.user.findUnique({ where: { id } });
@@ -35,7 +36,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const authResult = await requireAuth();
@@ -59,6 +60,12 @@ export async function DELETE(
   }
 
   await prisma.user.delete({ where: { id } });
+
+  await auditLog("user_deleted", {
+    userId,
+    details: { deletedUserId: id, deletedUserEmail: target.email },
+    ipAddress: getClientIp(request),
+  });
 
   return NextResponse.json({ success: true });
 }

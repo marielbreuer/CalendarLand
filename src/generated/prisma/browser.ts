@@ -87,3 +87,8 @@ export type TimeEntry = Prisma.TimeEntryModel
  * 
  */
 export type WeeklyDigest = Prisma.WeeklyDigestModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

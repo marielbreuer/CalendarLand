@@ -6,6 +6,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Calendar Land",
   description: "The perfect calendar web app",
+  icons: {
+    icon: "https://breuer.land/mariel/favicon/favicon.ico",
+  },
 };
 
 export default function RootLayout({

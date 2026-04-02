@@ -138,6 +138,9 @@ function RegisterForm() {
             color: "var(--text-primary, #111827)",
           }}
         />
+        <p className="text-xs mt-1" style={{ color: "var(--text-secondary, #6b7280)" }}>
+          Min 8 characters, one uppercase letter, one number
+        </p>
       </div>
 
       {error && (

@@ -398,6 +398,7 @@ export const ModelName = {
   Notification: 'Notification',
   TimeEntry: 'TimeEntry',
   WeeklyDigest: 'WeeklyDigest',
+  GoogleCalendarConnection: 'GoogleCalendarConnection',
   AuditLog: 'AuditLog'
 } as const
 
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "invite" | "calendar" | "task" | "event" | "participant" | "tag" | "eventTemplate" | "userSettings" | "schedulingPage" | "booking" | "notification" | "timeEntry" | "weeklyDigest" | "auditLog"
+    modelProps: "user" | "invite" | "calendar" | "task" | "event" | "participant" | "tag" | "eventTemplate" | "userSettings" | "schedulingPage" | "booking" | "notification" | "timeEntry" | "weeklyDigest" | "googleCalendarConnection" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1454,6 +1455,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GoogleCalendarConnection: {
+      payload: Prisma.$GoogleCalendarConnectionPayload<ExtArgs>
+      fields: Prisma.GoogleCalendarConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GoogleCalendarConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GoogleCalendarConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.GoogleCalendarConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GoogleCalendarConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.GoogleCalendarConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.GoogleCalendarConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.GoogleCalendarConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GoogleCalendarConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.GoogleCalendarConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        update: {
+          args: Prisma.GoogleCalendarConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.GoogleCalendarConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GoogleCalendarConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GoogleCalendarConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.GoogleCalendarConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleCalendarConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.GoogleCalendarConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGoogleCalendarConnection>
+        }
+        groupBy: {
+          args: Prisma.GoogleCalendarConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GoogleCalendarConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GoogleCalendarConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GoogleCalendarConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -1652,6 +1727,7 @@ export const EventScalarFieldEnum = {
   tags: 'tags',
   reminders: 'reminders',
   isFocusTime: 'isFocusTime',
+  googleEventId: 'googleEventId',
   calendarId: 'calendarId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1796,6 +1872,24 @@ export const WeeklyDigestScalarFieldEnum = {
 } as const
 
 export type WeeklyDigestScalarFieldEnum = (typeof WeeklyDigestScalarFieldEnum)[keyof typeof WeeklyDigestScalarFieldEnum]
+
+
+export const GoogleCalendarConnectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  googleEmail: 'googleEmail',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  expiresAt: 'expiresAt',
+  googleCalendarId: 'googleCalendarId',
+  calendarId: 'calendarId',
+  syncToken: 'syncToken',
+  lastSyncedAt: 'lastSyncedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GoogleCalendarConnectionScalarFieldEnum = (typeof GoogleCalendarConnectionScalarFieldEnum)[keyof typeof GoogleCalendarConnectionScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -2011,6 +2105,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   timeEntry?: Prisma.TimeEntryOmit
   weeklyDigest?: Prisma.WeeklyDigestOmit
+  googleCalendarConnection?: Prisma.GoogleCalendarConnectionOmit
   auditLog?: Prisma.AuditLogOmit
 }
 

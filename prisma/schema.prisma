@@ -26,7 +26,8 @@ model User {
   invites         Invite[]
   timeEntries     TimeEntry[]
   weeklyDigests   WeeklyDigest[]
-  auditLogs       AuditLog[]
+  auditLogs              AuditLog[]
+  googleCalendarConnection GoogleCalendarConnection?
 
   @@index([email])
   @@map("users")
@@ -71,6 +72,7 @@ model Calendar {
   templates       EventTemplate[]
   schedulingPages SchedulingPage[]
   timeEntries     TimeEntry[]
+  googleConnection GoogleCalendarConnection?
 
   @@index([userId])
   @@map("calendars")
@@ -125,7 +127,8 @@ model Event {
 
   tags      String? @db.Text // JSON string array
   reminders String? @db.Text // JSON array: [{"minutes":5},{"minutes":60}]
-  isFocusTime Boolean @default(false)
+  isFocusTime   Boolean @default(false)
+  googleEventId String? // linked Google Calendar event id
 
   calendarId String
   calendar   Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
@@ -328,6 +331,25 @@ model WeeklyDigest {
   @@unique([userId, weekStart])
   @@index([userId])
   @@map("weekly_digests")
+}
+
+model GoogleCalendarConnection {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  googleEmail      String
+  accessToken      String    @db.Text
+  refreshToken     String    @db.Text
+  expiresAt        DateTime
+  googleCalendarId String    @default("primary") // which Google calendar to sync
+  calendarId       String?   @unique             // which Calendar Land calendar to sync
+  calendar         Calendar? @relation(fields: [calendarId], references: [id], onDelete: SetNull)
+  syncToken        String?   @db.Text            // for incremental pull sync
+  lastSyncedAt     DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("google_calendar_connections")
 }
 
 model AuditLog {

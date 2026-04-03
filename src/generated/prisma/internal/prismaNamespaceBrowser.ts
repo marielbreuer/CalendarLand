@@ -65,6 +65,7 @@ export const ModelName = {
   Notification: 'Notification',
   TimeEntry: 'TimeEntry',
   WeeklyDigest: 'WeeklyDigest',
+  GoogleCalendarConnection: 'GoogleCalendarConnection',
   AuditLog: 'AuditLog'
 } as const
 
@@ -169,6 +170,7 @@ export const EventScalarFieldEnum = {
   tags: 'tags',
   reminders: 'reminders',
   isFocusTime: 'isFocusTime',
+  googleEventId: 'googleEventId',
   calendarId: 'calendarId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -313,6 +315,24 @@ export const WeeklyDigestScalarFieldEnum = {
 } as const
 
 export type WeeklyDigestScalarFieldEnum = (typeof WeeklyDigestScalarFieldEnum)[keyof typeof WeeklyDigestScalarFieldEnum]
+
+
+export const GoogleCalendarConnectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  googleEmail: 'googleEmail',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  expiresAt: 'expiresAt',
+  googleCalendarId: 'googleCalendarId',
+  calendarId: 'calendarId',
+  syncToken: 'syncToken',
+  lastSyncedAt: 'lastSyncedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GoogleCalendarConnectionScalarFieldEnum = (typeof GoogleCalendarConnectionScalarFieldEnum)[keyof typeof GoogleCalendarConnectionScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {

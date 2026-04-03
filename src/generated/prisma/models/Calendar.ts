@@ -286,6 +286,7 @@ export type CalendarWhereInput = {
   templates?: Prisma.EventTemplateListRelationFilter
   schedulingPages?: Prisma.SchedulingPageListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
+  googleConnection?: Prisma.XOR<Prisma.GoogleCalendarConnectionNullableScalarRelationFilter, Prisma.GoogleCalendarConnectionWhereInput> | null
 }
 
 export type CalendarOrderByWithRelationInput = {
@@ -308,6 +309,7 @@ export type CalendarOrderByWithRelationInput = {
   templates?: Prisma.EventTemplateOrderByRelationAggregateInput
   schedulingPages?: Prisma.SchedulingPageOrderByRelationAggregateInput
   timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
+  googleConnection?: Prisma.GoogleCalendarConnectionOrderByWithRelationInput
 }
 
 export type CalendarWhereUniqueInput = Prisma.AtLeast<{
@@ -333,6 +335,7 @@ export type CalendarWhereUniqueInput = Prisma.AtLeast<{
   templates?: Prisma.EventTemplateListRelationFilter
   schedulingPages?: Prisma.SchedulingPageListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
+  googleConnection?: Prisma.XOR<Prisma.GoogleCalendarConnectionNullableScalarRelationFilter, Prisma.GoogleCalendarConnectionWhereInput> | null
 }, "id">
 
 export type CalendarOrderByWithAggregationInput = {
@@ -394,6 +397,7 @@ export type CalendarCreateInput = {
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateInput = {
@@ -415,6 +419,7 @@ export type CalendarUncheckedCreateInput = {
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUpdateInput = {
@@ -436,6 +441,7 @@ export type CalendarUpdateInput = {
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateInput = {
@@ -457,6 +463,7 @@ export type CalendarUncheckedUpdateInput = {
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarCreateManyInput = {
@@ -702,6 +709,22 @@ export type CalendarUpdateOneRequiredWithoutTimeEntriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CalendarUpdateToOneWithWhereWithoutTimeEntriesInput, Prisma.CalendarUpdateWithoutTimeEntriesInput>, Prisma.CalendarUncheckedUpdateWithoutTimeEntriesInput>
 }
 
+export type CalendarCreateNestedOneWithoutGoogleConnectionInput = {
+  create?: Prisma.XOR<Prisma.CalendarCreateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedCreateWithoutGoogleConnectionInput>
+  connectOrCreate?: Prisma.CalendarCreateOrConnectWithoutGoogleConnectionInput
+  connect?: Prisma.CalendarWhereUniqueInput
+}
+
+export type CalendarUpdateOneWithoutGoogleConnectionNestedInput = {
+  create?: Prisma.XOR<Prisma.CalendarCreateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedCreateWithoutGoogleConnectionInput>
+  connectOrCreate?: Prisma.CalendarCreateOrConnectWithoutGoogleConnectionInput
+  upsert?: Prisma.CalendarUpsertWithoutGoogleConnectionInput
+  disconnect?: Prisma.CalendarWhereInput | boolean
+  delete?: Prisma.CalendarWhereInput | boolean
+  connect?: Prisma.CalendarWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CalendarUpdateToOneWithWhereWithoutGoogleConnectionInput, Prisma.CalendarUpdateWithoutGoogleConnectionInput>, Prisma.CalendarUncheckedUpdateWithoutGoogleConnectionInput>
+}
+
 export type CalendarCreateWithoutUserInput = {
   id?: string
   name: string
@@ -720,6 +743,7 @@ export type CalendarCreateWithoutUserInput = {
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutUserInput = {
@@ -740,6 +764,7 @@ export type CalendarUncheckedCreateWithoutUserInput = {
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutUserInput = {
@@ -805,6 +830,7 @@ export type CalendarCreateWithoutTasksInput = {
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutTasksInput = {
@@ -825,6 +851,7 @@ export type CalendarUncheckedCreateWithoutTasksInput = {
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutTasksInput = {
@@ -861,6 +888,7 @@ export type CalendarUpdateWithoutTasksInput = {
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutTasksInput = {
@@ -881,6 +909,7 @@ export type CalendarUncheckedUpdateWithoutTasksInput = {
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarCreateWithoutEventsInput = {
@@ -901,6 +930,7 @@ export type CalendarCreateWithoutEventsInput = {
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutEventsInput = {
@@ -921,6 +951,7 @@ export type CalendarUncheckedCreateWithoutEventsInput = {
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutEventsInput = {
@@ -957,6 +988,7 @@ export type CalendarUpdateWithoutEventsInput = {
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutEventsInput = {
@@ -977,6 +1009,7 @@ export type CalendarUncheckedUpdateWithoutEventsInput = {
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarCreateWithoutTemplatesInput = {
@@ -997,6 +1030,7 @@ export type CalendarCreateWithoutTemplatesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutTemplatesInput = {
@@ -1017,6 +1051,7 @@ export type CalendarUncheckedCreateWithoutTemplatesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutTemplatesInput = {
@@ -1053,6 +1088,7 @@ export type CalendarUpdateWithoutTemplatesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutTemplatesInput = {
@@ -1073,6 +1109,7 @@ export type CalendarUncheckedUpdateWithoutTemplatesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarCreateWithoutSchedulingPagesInput = {
@@ -1093,6 +1130,7 @@ export type CalendarCreateWithoutSchedulingPagesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCalendarInput
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutSchedulingPagesInput = {
@@ -1113,6 +1151,7 @@ export type CalendarUncheckedCreateWithoutSchedulingPagesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCalendarInput
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutSchedulingPagesInput = {
@@ -1149,6 +1188,7 @@ export type CalendarUpdateWithoutSchedulingPagesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCalendarNestedInput
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutSchedulingPagesInput = {
@@ -1169,6 +1209,7 @@ export type CalendarUncheckedUpdateWithoutSchedulingPagesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCalendarNestedInput
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarCreateWithoutTimeEntriesInput = {
@@ -1189,6 +1230,7 @@ export type CalendarCreateWithoutTimeEntriesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCalendarInput
   templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarUncheckedCreateWithoutTimeEntriesInput = {
@@ -1209,6 +1251,7 @@ export type CalendarUncheckedCreateWithoutTimeEntriesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCalendarInput
   templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
   schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedCreateNestedOneWithoutCalendarInput
 }
 
 export type CalendarCreateOrConnectWithoutTimeEntriesInput = {
@@ -1245,6 +1288,7 @@ export type CalendarUpdateWithoutTimeEntriesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCalendarNestedInput
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutTimeEntriesInput = {
@@ -1265,6 +1309,107 @@ export type CalendarUncheckedUpdateWithoutTimeEntriesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCalendarNestedInput
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
+}
+
+export type CalendarCreateWithoutGoogleConnectionInput = {
+  id?: string
+  name: string
+  color?: string
+  isVisible?: boolean
+  isDefault?: boolean
+  sortOrder?: number
+  workingHoursStart?: string
+  workingHoursEnd?: string
+  workingDays?: string
+  isAlwaysAvailable?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCalendarsInput
+  events?: Prisma.EventCreateNestedManyWithoutCalendarInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCalendarInput
+  templates?: Prisma.EventTemplateCreateNestedManyWithoutCalendarInput
+  schedulingPages?: Prisma.SchedulingPageCreateNestedManyWithoutCalendarInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCalendarInput
+}
+
+export type CalendarUncheckedCreateWithoutGoogleConnectionInput = {
+  id?: string
+  name: string
+  color?: string
+  isVisible?: boolean
+  isDefault?: boolean
+  sortOrder?: number
+  workingHoursStart?: string
+  workingHoursEnd?: string
+  workingDays?: string
+  isAlwaysAvailable?: boolean
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCalendarInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCalendarInput
+  templates?: Prisma.EventTemplateUncheckedCreateNestedManyWithoutCalendarInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedCreateNestedManyWithoutCalendarInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCalendarInput
+}
+
+export type CalendarCreateOrConnectWithoutGoogleConnectionInput = {
+  where: Prisma.CalendarWhereUniqueInput
+  create: Prisma.XOR<Prisma.CalendarCreateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedCreateWithoutGoogleConnectionInput>
+}
+
+export type CalendarUpsertWithoutGoogleConnectionInput = {
+  update: Prisma.XOR<Prisma.CalendarUpdateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedUpdateWithoutGoogleConnectionInput>
+  create: Prisma.XOR<Prisma.CalendarCreateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedCreateWithoutGoogleConnectionInput>
+  where?: Prisma.CalendarWhereInput
+}
+
+export type CalendarUpdateToOneWithWhereWithoutGoogleConnectionInput = {
+  where?: Prisma.CalendarWhereInput
+  data: Prisma.XOR<Prisma.CalendarUpdateWithoutGoogleConnectionInput, Prisma.CalendarUncheckedUpdateWithoutGoogleConnectionInput>
+}
+
+export type CalendarUpdateWithoutGoogleConnectionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  workingHoursStart?: Prisma.StringFieldUpdateOperationsInput | string
+  workingHoursEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  workingDays?: Prisma.StringFieldUpdateOperationsInput | string
+  isAlwaysAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCalendarsNestedInput
+  events?: Prisma.EventUpdateManyWithoutCalendarNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCalendarNestedInput
+  templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
+  schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+}
+
+export type CalendarUncheckedUpdateWithoutGoogleConnectionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  workingHoursStart?: Prisma.StringFieldUpdateOperationsInput | string
+  workingHoursEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  workingDays?: Prisma.StringFieldUpdateOperationsInput | string
+  isAlwaysAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.EventUncheckedUpdateManyWithoutCalendarNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCalendarNestedInput
+  templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
+  schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
 }
 
 export type CalendarCreateManyUserInput = {
@@ -1300,6 +1445,7 @@ export type CalendarUpdateWithoutUserInput = {
   templates?: Prisma.EventTemplateUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateWithoutUserInput = {
@@ -1320,6 +1466,7 @@ export type CalendarUncheckedUpdateWithoutUserInput = {
   templates?: Prisma.EventTemplateUncheckedUpdateManyWithoutCalendarNestedInput
   schedulingPages?: Prisma.SchedulingPageUncheckedUpdateManyWithoutCalendarNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCalendarNestedInput
+  googleConnection?: Prisma.GoogleCalendarConnectionUncheckedUpdateOneWithoutCalendarNestedInput
 }
 
 export type CalendarUncheckedUpdateManyWithoutUserInput = {
@@ -1424,6 +1571,7 @@ export type CalendarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   templates?: boolean | Prisma.Calendar$templatesArgs<ExtArgs>
   schedulingPages?: boolean | Prisma.Calendar$schedulingPagesArgs<ExtArgs>
   timeEntries?: boolean | Prisma.Calendar$timeEntriesArgs<ExtArgs>
+  googleConnection?: boolean | Prisma.Calendar$googleConnectionArgs<ExtArgs>
   _count?: boolean | Prisma.CalendarCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["calendar"]>
 
@@ -1485,6 +1633,7 @@ export type CalendarInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   templates?: boolean | Prisma.Calendar$templatesArgs<ExtArgs>
   schedulingPages?: boolean | Prisma.Calendar$schedulingPagesArgs<ExtArgs>
   timeEntries?: boolean | Prisma.Calendar$timeEntriesArgs<ExtArgs>
+  googleConnection?: boolean | Prisma.Calendar$googleConnectionArgs<ExtArgs>
   _count?: boolean | Prisma.CalendarCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CalendarIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1503,6 +1652,7 @@ export type $CalendarPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     templates: Prisma.$EventTemplatePayload<ExtArgs>[]
     schedulingPages: Prisma.$SchedulingPagePayload<ExtArgs>[]
     timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
+    googleConnection: Prisma.$GoogleCalendarConnectionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1918,6 +2068,7 @@ export interface Prisma__CalendarClient<T, Null = never, ExtArgs extends runtime
   templates<T extends Prisma.Calendar$templatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Calendar$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   schedulingPages<T extends Prisma.Calendar$schedulingPagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Calendar$schedulingPagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchedulingPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timeEntries<T extends Prisma.Calendar$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Calendar$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  googleConnection<T extends Prisma.Calendar$googleConnectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Calendar$googleConnectionArgs<ExtArgs>>): Prisma.Prisma__GoogleCalendarConnectionClient<runtime.Types.Result.GetResult<Prisma.$GoogleCalendarConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2473,6 +2624,25 @@ export type Calendar$timeEntriesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.TimeEntryScalarFieldEnum | Prisma.TimeEntryScalarFieldEnum[]
+}
+
+/**
+ * Calendar.googleConnection
+ */
+export type Calendar$googleConnectionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GoogleCalendarConnection
+   */
+  select?: Prisma.GoogleCalendarConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GoogleCalendarConnection
+   */
+  omit?: Prisma.GoogleCalendarConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoogleCalendarConnectionInclude<ExtArgs> | null
+  where?: Prisma.GoogleCalendarConnectionWhereInput
 }
 
 /**

@@ -15,6 +15,8 @@ export default auth((req) => {
     pathname.startsWith("/book") ||
     pathname.startsWith("/api/book") ||
     pathname.startsWith("/api/register") ||
+    pathname.startsWith("/api/feed") ||
+    pathname.startsWith("/api/auth/google/callback") ||
     pathname.startsWith("/_next") ||
     pathname === "/favicon.ico" ||
     pathname === "/api/health";

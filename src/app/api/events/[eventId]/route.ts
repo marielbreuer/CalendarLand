@@ -4,6 +4,7 @@ import { updateEventSchema } from "@/lib/validators";
 import { parseTags, serializeTags, syncTagUsageCounts, diffTags } from "@/lib/tag-utils";
 import { parseReminders, serializeReminders, computeFireTimes } from "@/lib/reminder-utils";
 import { requireAuth } from "@/lib/auth-guard";
+import { pushEventUpdate, pushEventDelete } from "@/lib/google-calendar";
 
 interface Params {
   params: Promise<{ eventId: string }>;
@@ -132,6 +133,21 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         }
       }
     }
+    // Fire-and-forget push to Google Calendar
+    pushEventUpdate(userId, {
+      id: event.id,
+      title: event.title,
+      description: event.description,
+      location: event.location,
+      startTime: event.startTime,
+      endTime: event.endTime,
+      isAllDay: event.isAllDay,
+      timezone: event.timezone,
+      rrule: event.rrule,
+      calendarId: event.calendarId,
+      googleEventId: event.googleEventId,
+    });
+
     const conflicts = await findConflicts(
       event.id,
       event.startTime,
@@ -304,6 +320,10 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     const oldTags = parseTags(event.tags);
     if (oldTags.length > 0) {
       await syncTagUsageCounts(prisma, [], oldTags, userId);
+    }
+    // Fire-and-forget push delete to Google Calendar
+    if (event.googleEventId) {
+      pushEventDelete(userId, event.calendarId, event.googleEventId);
     }
     return new NextResponse(null, { status: 204 });
   }

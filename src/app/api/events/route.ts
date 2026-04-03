@@ -7,6 +7,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { parseTags, serializeTags, syncTagUsageCounts } from "@/lib/tag-utils";
 import { parseReminders, serializeReminders, computeFireTimes } from "@/lib/reminder-utils";
 import { requireAuth } from "@/lib/auth-guard";
+import { pushEventCreate } from "@/lib/google-calendar";
 
 function parseExDates(exDates: string | null): Set<string> {
   if (!exDates) return new Set();
@@ -272,6 +273,20 @@ export async function POST(request: Request) {
     });
     conflicts = overlapping;
   }
+
+  // Fire-and-forget push to Google Calendar (if this calendar is synced)
+  pushEventCreate(userId, {
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    location: event.location,
+    startTime: event.startTime,
+    endTime: event.endTime,
+    isAllDay: event.isAllDay,
+    timezone: event.timezone,
+    rrule: event.rrule,
+    calendarId: event.calendarId,
+  });
 
   return NextResponse.json(
     { ...event, tags: parseTags(event.tags), reminders: parseReminders(event.reminders), conflicts },

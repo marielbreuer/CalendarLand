@@ -44,6 +44,7 @@ export type EventMinAggregateOutputType = {
   tags: string | null
   reminders: string | null
   isFocusTime: boolean | null
+  googleEventId: string | null
   calendarId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +70,7 @@ export type EventMaxAggregateOutputType = {
   tags: string | null
   reminders: string | null
   isFocusTime: boolean | null
+  googleEventId: string | null
   calendarId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -94,6 +96,7 @@ export type EventCountAggregateOutputType = {
   tags: number
   reminders: number
   isFocusTime: number
+  googleEventId: number
   calendarId: number
   createdAt: number
   updatedAt: number
@@ -121,6 +124,7 @@ export type EventMinAggregateInputType = {
   tags?: true
   reminders?: true
   isFocusTime?: true
+  googleEventId?: true
   calendarId?: true
   createdAt?: true
   updatedAt?: true
@@ -146,6 +150,7 @@ export type EventMaxAggregateInputType = {
   tags?: true
   reminders?: true
   isFocusTime?: true
+  googleEventId?: true
   calendarId?: true
   createdAt?: true
   updatedAt?: true
@@ -171,6 +176,7 @@ export type EventCountAggregateInputType = {
   tags?: true
   reminders?: true
   isFocusTime?: true
+  googleEventId?: true
   calendarId?: true
   createdAt?: true
   updatedAt?: true
@@ -269,6 +275,7 @@ export type EventGroupByOutputType = {
   tags: string | null
   reminders: string | null
   isFocusTime: boolean
+  googleEventId: string | null
   calendarId: string
   createdAt: Date
   updatedAt: Date
@@ -315,6 +322,7 @@ export type EventWhereInput = {
   tags?: Prisma.StringNullableFilter<"Event"> | string | null
   reminders?: Prisma.StringNullableFilter<"Event"> | string | null
   isFocusTime?: Prisma.BoolFilter<"Event"> | boolean
+  googleEventId?: Prisma.StringNullableFilter<"Event"> | string | null
   calendarId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -344,6 +352,7 @@ export type EventOrderByWithRelationInput = {
   tags?: Prisma.SortOrderInput | Prisma.SortOrder
   reminders?: Prisma.SortOrderInput | Prisma.SortOrder
   isFocusTime?: Prisma.SortOrder
+  googleEventId?: Prisma.SortOrderInput | Prisma.SortOrder
   calendarId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -376,6 +385,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   tags?: Prisma.StringNullableFilter<"Event"> | string | null
   reminders?: Prisma.StringNullableFilter<"Event"> | string | null
   isFocusTime?: Prisma.BoolFilter<"Event"> | boolean
+  googleEventId?: Prisma.StringNullableFilter<"Event"> | string | null
   calendarId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -405,6 +415,7 @@ export type EventOrderByWithAggregationInput = {
   tags?: Prisma.SortOrderInput | Prisma.SortOrder
   reminders?: Prisma.SortOrderInput | Prisma.SortOrder
   isFocusTime?: Prisma.SortOrder
+  googleEventId?: Prisma.SortOrderInput | Prisma.SortOrder
   calendarId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -436,6 +447,7 @@ export type EventScalarWhereWithAggregatesInput = {
   tags?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   reminders?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   isFocusTime?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
+  googleEventId?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   calendarId?: Prisma.StringWithAggregatesFilter<"Event"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -461,6 +473,7 @@ export type EventCreateInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   calendar: Prisma.CalendarCreateNestedOneWithoutEventsInput
@@ -489,6 +502,7 @@ export type EventUncheckedCreateInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   calendarId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -517,6 +531,7 @@ export type EventUpdateInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendar?: Prisma.CalendarUpdateOneRequiredWithoutEventsNestedInput
@@ -545,6 +560,7 @@ export type EventUncheckedUpdateInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   calendarId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -573,6 +589,7 @@ export type EventCreateManyInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   calendarId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -598,6 +615,7 @@ export type EventUpdateManyMutationInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -622,6 +640,7 @@ export type EventUncheckedUpdateManyInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   calendarId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -657,6 +676,7 @@ export type EventCountOrderByAggregateInput = {
   tags?: Prisma.SortOrder
   reminders?: Prisma.SortOrder
   isFocusTime?: Prisma.SortOrder
+  googleEventId?: Prisma.SortOrder
   calendarId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -682,6 +702,7 @@ export type EventMaxOrderByAggregateInput = {
   tags?: Prisma.SortOrder
   reminders?: Prisma.SortOrder
   isFocusTime?: Prisma.SortOrder
+  googleEventId?: Prisma.SortOrder
   calendarId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -707,6 +728,7 @@ export type EventMinOrderByAggregateInput = {
   tags?: Prisma.SortOrder
   reminders?: Prisma.SortOrder
   isFocusTime?: Prisma.SortOrder
+  googleEventId?: Prisma.SortOrder
   calendarId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -830,6 +852,7 @@ export type EventCreateWithoutCalendarInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   participants?: Prisma.ParticipantCreateNestedManyWithoutEventInput
@@ -857,6 +880,7 @@ export type EventUncheckedCreateWithoutCalendarInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutEventInput
@@ -913,6 +937,7 @@ export type EventScalarWhereInput = {
   tags?: Prisma.StringNullableFilter<"Event"> | string | null
   reminders?: Prisma.StringNullableFilter<"Event"> | string | null
   isFocusTime?: Prisma.BoolFilter<"Event"> | boolean
+  googleEventId?: Prisma.StringNullableFilter<"Event"> | string | null
   calendarId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -938,6 +963,7 @@ export type EventCreateWithoutParticipantsInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   calendar: Prisma.CalendarCreateNestedOneWithoutEventsInput
@@ -965,6 +991,7 @@ export type EventUncheckedCreateWithoutParticipantsInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   calendarId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1008,6 +1035,7 @@ export type EventUpdateWithoutParticipantsInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendar?: Prisma.CalendarUpdateOneRequiredWithoutEventsNestedInput
@@ -1035,6 +1063,7 @@ export type EventUncheckedUpdateWithoutParticipantsInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   calendarId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1062,6 +1091,7 @@ export type EventCreateWithoutNotificationsInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   calendar: Prisma.CalendarCreateNestedOneWithoutEventsInput
@@ -1089,6 +1119,7 @@ export type EventUncheckedCreateWithoutNotificationsInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   calendarId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1132,6 +1163,7 @@ export type EventUpdateWithoutNotificationsInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendar?: Prisma.CalendarUpdateOneRequiredWithoutEventsNestedInput
@@ -1159,6 +1191,7 @@ export type EventUncheckedUpdateWithoutNotificationsInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   calendarId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1186,6 +1219,7 @@ export type EventCreateWithoutTimeEntriesInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   calendar: Prisma.CalendarCreateNestedOneWithoutEventsInput
@@ -1213,6 +1247,7 @@ export type EventUncheckedCreateWithoutTimeEntriesInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   calendarId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1256,6 +1291,7 @@ export type EventUpdateWithoutTimeEntriesInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   calendar?: Prisma.CalendarUpdateOneRequiredWithoutEventsNestedInput
@@ -1283,6 +1319,7 @@ export type EventUncheckedUpdateWithoutTimeEntriesInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   calendarId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1310,6 +1347,7 @@ export type EventCreateManyCalendarInput = {
   tags?: string | null
   reminders?: string | null
   isFocusTime?: boolean
+  googleEventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1334,6 +1372,7 @@ export type EventUpdateWithoutCalendarInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   participants?: Prisma.ParticipantUpdateManyWithoutEventNestedInput
@@ -1361,6 +1400,7 @@ export type EventUncheckedUpdateWithoutCalendarInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutEventNestedInput
@@ -1388,6 +1428,7 @@ export type EventUncheckedUpdateManyWithoutCalendarInput = {
   tags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminders?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFocusTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1461,6 +1502,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tags?: boolean
   reminders?: boolean
   isFocusTime?: boolean
+  googleEventId?: boolean
   calendarId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1491,6 +1533,7 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tags?: boolean
   reminders?: boolean
   isFocusTime?: boolean
+  googleEventId?: boolean
   calendarId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1517,6 +1560,7 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tags?: boolean
   reminders?: boolean
   isFocusTime?: boolean
+  googleEventId?: boolean
   calendarId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1543,12 +1587,13 @@ export type EventSelectScalar = {
   tags?: boolean
   reminders?: boolean
   isFocusTime?: boolean
+  googleEventId?: boolean
   calendarId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "meetingLink" | "startTime" | "endTime" | "isAllDay" | "timezone" | "isRecurring" | "rrule" | "recurrenceEnd" | "exDates" | "seriesId" | "isException" | "originalDate" | "tags" | "reminders" | "isFocusTime" | "calendarId" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "meetingLink" | "startTime" | "endTime" | "isAllDay" | "timezone" | "isRecurring" | "rrule" | "recurrenceEnd" | "exDates" | "seriesId" | "isException" | "originalDate" | "tags" | "reminders" | "isFocusTime" | "googleEventId" | "calendarId" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   calendar?: boolean | Prisma.CalendarDefaultArgs<ExtArgs>
   participants?: boolean | Prisma.Event$participantsArgs<ExtArgs>
@@ -1591,6 +1636,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     tags: string | null
     reminders: string | null
     isFocusTime: boolean
+    googleEventId: string | null
     calendarId: string
     createdAt: Date
     updatedAt: Date
@@ -2040,6 +2086,7 @@ export interface EventFieldRefs {
   readonly tags: Prisma.FieldRef<"Event", 'String'>
   readonly reminders: Prisma.FieldRef<"Event", 'String'>
   readonly isFocusTime: Prisma.FieldRef<"Event", 'Boolean'>
+  readonly googleEventId: Prisma.FieldRef<"Event", 'String'>
   readonly calendarId: Prisma.FieldRef<"Event", 'String'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>

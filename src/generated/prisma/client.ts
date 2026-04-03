@@ -110,6 +110,11 @@ export type TimeEntry = Prisma.TimeEntryModel
  */
 export type WeeklyDigest = Prisma.WeeklyDigestModel
 /**
+ * Model GoogleCalendarConnection
+ * 
+ */
+export type GoogleCalendarConnection = Prisma.GoogleCalendarConnectionModel
+/**
  * Model AuditLog
  * 
  */
